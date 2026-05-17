@@ -112,6 +112,7 @@ select{padding:7px 10px;border:1px solid #e2e8f0;border-radius:8px;background:#f
 .cmp-tag{position:absolute;bottom:12px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:5px;z-index:4;pointer-events:none;letter-spacing:.5px}
 .cmp-tag-l{left:12px;background:rgba(37,99,235,.85);color:#fff}
 .cmp-tag-r{right:12px;background:rgba(16,185,129,.85);color:#fff}
+.cmp-tag-c{left:50%;transform:translateX(-50%);bottom:12px;background:rgba(0,0,0,.6);color:#fff;font-size:10px;padding:3px 8px}
 .modal-stats{display:flex;gap:32px;justify-content:center;margin-top:18px;text-align:center}
 .modal-stat .label{font-size:12px;color:#94a3b8;margin-bottom:2px}
 .modal-stat .value{font-size:20px;font-weight:700}
@@ -355,6 +356,7 @@ QuickImgCompress
 <div class="cmp-handle" id="cmpHandle"></div>
 <div class="cmp-tag cmp-tag-l" data-i="cmpOrig">原图</div>
 <div class="cmp-tag cmp-tag-r" data-i="cmpComp">压缩后</div>
+<div class="cmp-tag cmp-tag-c" id="cmpQuality">Q:80%</div>
 </div>
 <div class="modal-stats">
 <div class="modal-stat"><div class="label" data-i="originalSize">原始大小</div><div class="value orig" id="origStat">-</div></div>
@@ -555,13 +557,22 @@ const cc=document.getElementById('cmpCompressed');
 const cos=document.getElementById('origStat');
 const ccs=document.getElementById('compStat');
 const css=document.getElementById('saveStat');
-let lastBlob=null;let lastFile=null;
+let lastBlob=null;let lastFile=null;let modalCanvas=null;let modalQ=80;
 
 function showModal(file,blob){
-lastBlob=blob;lastFile=file;
+lastBlob=blob;lastFile=file;modalCanvas=null;
 mo.classList.add('show');
 co.src=URL.createObjectURL(file);
 cc.src=URL.createObjectURL(blob);
+// Load original image onto a hidden canvas for on-demand re-compression
+const mImg=new Image();
+mImg.onload=()=>{
+  const c=document.createElement('canvas');
+  c.width=mImg.naturalWidth;c.height=mImg.naturalHeight;
+  c.getContext('2d').drawImage(mImg,0,0);
+  modalCanvas=c;
+};
+mImg.src=URL.createObjectURL(file);
 // Animate counters
 const origSize=file.size,compSize=blob.size,savePct=Math.round((1-blob.size/file.size)*100);
 cos.textContent='0 B';ccs.textContent='0 B';css.textContent='';
@@ -601,6 +612,24 @@ document.addEventListener('touchend',()=>{dragging=false});
 function mS(e){
 const r=cw.getBoundingClientRect();let x=(e.clientX||0)-r.left;x=Math.max(0,Math.min(x,r.width));const p=(x/r.width)*100;
 document.getElementById('cmpOverlay').style.clipPath=`inset(0 ${100-p}% 0 0)`;document.getElementById('cmpHandle').style.left=`${p}%`;
+const qb=document.getElementById('cmpQuality');
+// Re-compress in real time: slider position = quality level
+// p=0 (showing original) → quality 95, p=100 (showing compressed) → quality 5
+if(!modalCanvas||!lastFile){if(qb)qb.textContent='Q:'+(Math.round(5+(p/100)*90))+'%';return;}
+const q=Math.round(5+(p/100)*90); // 5–95
+if(qb)qb.textContent='Q:'+q+'%';
+if(q===modalQ)return;modalQ=q;
+const m={'jpeg':'image/jpeg','png':'image/png','webp':'image/webp'};
+const fmtMime=m[fs.value]||'image/jpeg';
+// Use requestIdleCallback or rAF for smoothness
+modalCanvas.toBlob(b=>{
+  if(!b)return;
+  lastBlob=b;
+  document.getElementById('cmpCompressed').src=URL.createObjectURL(b);
+  document.getElementById('compStat').textContent=fmt(b.size);
+  const sp=Math.round((1-b.size/lastFile.size)*100);
+  document.getElementById('saveStat').textContent='-'+sp+'%';
+},fmtMime,q/100);
 }
 
 // ===== Sticky / Download =====
