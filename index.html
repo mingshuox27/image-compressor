@@ -1,707 +1,922 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Online Image Compressor - Compress JPEG, PNG, WebP Instantly | QuickImgCompress</title>
-    <meta name="description" content="Compress images online for free. Reduce JPEG, PNG, and WebP file sizes by up to 80% without losing quality. 100% browser-based - no upload, fully private. Batch compress multiple images at once.">
-    <meta name="keywords" content="image compressor, compress image online, reduce image size, batch image compressor, compress JPEG, compress PNG, free image compressor, image optimizer, resize image, bulk image compressor">
-    <link rel="canonical" href="https://quickimgcompress.com">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QuickImgCompress — 智能图片压缩工具</title>
+<meta name="description" content="在线智能图片压缩，支持JPEG/PNG/WebP。浏览器本地处理，保护隐私。">
+<link rel="canonical" href="https://quickimgcompress.com">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#f8fafc;color:#1e293b;line-height:1.6;min-height:100vh}
 
-    <!-- Open Graph -->
-    <meta property="og:title" content="Free Online Image Compressor - Compress JPEG, PNG, WebP">
-    <meta property="og:description" content="Compress and resize images online for free. Batch processing, 100% private, no upload required.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://quickimgcompress.com">
+/* ===== Nav ===== */
+nav{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:100}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;height:60px;padding:0 24px;gap:32px}
+.nav-logo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:17px;color:#1e293b;text-decoration:none}
+.nav-logo svg{flex-shrink:0}
+.nav-links{display:flex;gap:4px;flex:1}
+.nav-link{padding:8px 16px;border-radius:8px;font-size:14px;font-weight:500;color:#64748b;cursor:pointer;transition:all .15s;border:none;background:none}
+.nav-link:hover{background:#f1f5f9;color:#1e293b}
+.nav-link.active{background:#eff6ff;color:#2563eb;font-weight:600}
+.nav-right{display:flex;gap:6px;align-items:center}
+.nav-icon-btn{width:34px;height:34px;border:1px solid #e2e8f0;border-radius:8px;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .15s}
+.nav-icon-btn:hover{border-color:#2563eb}
+.nav-pro{background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;border:none;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer}
 
-    <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
+/* ===== Page Container ===== */
+.page{max-width:720px;margin:0 auto;padding:40px 24px 60px}
 
-        :root {
-            --bg: #f0f4f8; --card-bg: #fff; --text: #1a202c; --text2: #64748b;
-            --primary: #2563eb; --primary-h: #1d4ed8; --primary-l: #dbeafe;
-            --border: #e2e8f0; --shadow: 0 1px 3px rgba(0,0,0,.08);
-            --shadow-lg: 0 10px 25px rgba(0,0,0,.1);
-            --r: 16px; --rs: 8px;
-            --success: #10b981; --success-bg: #d1fae5;
-            --error: #ef4444; --error-bg: #fee2e2;
-            --pro: #f59e0b;
-        }
-        [data-theme="dark"] {
-            --bg: #0f172a; --card-bg: #1e293b; --text: #e2e8f0; --text2: #94a3b8;
-            --primary: #60a5fa; --primary-h: #3b82f6; --primary-l: #1e3a5f;
-            --border: #334155; --shadow: 0 1px 3px rgba(0,0,0,.3);
-            --success: #34d399; --success-bg: #064e3b;
-            --error: #f87171; --error-bg: #7f1d1d;
-        }
+/* ===== Home Page ===== */
+.page-home h1{font-size:40px;font-weight:800;line-height:1.15;letter-spacing:-.02em}
+.page-home h1 span{background:linear-gradient(135deg,#2563eb,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.page-home .sub{color:#64748b;font-size:17px;margin-top:16px;max-width:500px}
+.page-home .cta{margin-top:28px;display:flex;gap:12px}
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: var(--bg); color: var(--text); line-height: 1.6;
-            transition: background .3s, color .3s;
-        }
+/* ===== Buttons ===== */
+.btn{padding:12px 28px;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;transition:all .2s;border:none;display:inline-flex;align-items:center;gap:8px}
+.btn-primary{background:#2563eb;color:#fff}
+.btn-primary:hover{background:#1d4ed8;transform:translateY(-1px);box-shadow:0 4px 12px rgba(37,99,235,.3)}
+.btn-outline{background:transparent;border:2px solid #e2e8f0;color:#475569}
+.btn-outline:hover{border-color:#2563eb;color:#2563eb}
+.btn-success{background:#10b981;color:#fff}
+.btn-success:hover{background:#059669}
+.btn-lg{padding:14px 36px;font-size:16px}
 
-        /* Header */
-        header {
-            background: var(--card-bg); border-bottom: 1px solid var(--border);
-            padding: 0 1.5rem; position: sticky; top: 0; z-index: 100;
-            backdrop-filter: blur(12px);
-        }
-        .hdr { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 60px; }
-        .logo { font-size: 1.15rem; font-weight: 700; display: flex; align-items: center; gap: .5rem; text-decoration: none; color: var(--text); }
-        .logo-icon { width: 34px; height: 34px; background: var(--primary); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; }
-        .hdr-actions { display: flex; gap: .5rem; align-items: center; }
-        .theme-btn { width: 36px; height: 36px; border: 1px solid var(--border); border-radius: var(--rs); background: transparent; cursor: pointer; font-size: 1rem; }
-        .theme-btn:hover { border-color: var(--primary); }
-        .pro-badge {
-            display: inline-block; padding: .25rem .75rem; border-radius: 999px;
-            background: linear-gradient(135deg, #f59e0b, #ef4444); color: #fff;
-            font-size: .75rem; font-weight: 700; cursor: pointer;
-        }
+/* ===== Droppable Zone ===== */
+.dz-wrap{background:#fff;border:2px dashed #d0d5dd;border-radius:20px;padding:56px 32px;text-align:center;cursor:pointer;transition:all .25s}
+.dz-wrap:hover{border-color:#2563eb;background:#f8faff}
+.dz-wrap.dragover{border-color:#2563eb;background:#eff6ff}
+.dz-icon{margin-bottom:12px}
+.dz-title{font-size:17px;font-weight:600;margin-bottom:4px}
+.dz-sub{color:#94a3b8;font-size:14px;margin-bottom:20px}
+.dz-btn{display:inline-block;padding:11px 28px;background:#2563eb;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:500;cursor:pointer;transition:background .15s}
+.dz-btn:hover{background:#1d4ed8}
+.dz-info{font-size:12px;color:#94a3b8;margin-top:14px}
 
-        /* Hero */
-        .hero { text-align: center; padding: 3rem 1.5rem 1.5rem; max-width: 750px; margin: 0 auto; }
-        .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: .75rem; line-height: 1.2; }
-        .hero h1 span { background: linear-gradient(135deg, var(--primary), #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero p { color: var(--text2); font-size: 1.05rem; max-width: 550px; margin: 0 auto; }
+/* ===== Count Bar ===== */
+.count-bar{display:none;align-items:center;justify-content:space-between;padding:12px 16px;background:#fff;border:1px solid #e2e8f0;border-radius:12px;margin:20px 0}
+.count-bar.show{display:flex}
+.count-num{font-weight:600}
+.count-actions{display:flex;gap:8px}
+.cmp-btn{padding:8px 20px;border-radius:8px;border:none;font-size:13px;font-weight:600;cursor:pointer}
+.clear-btn{padding:8px 20px;border-radius:8px;border:1px solid #e2e8f0;background:#fff;color:#64748b;font-size:13px;cursor:pointer}
 
-        /* Container */
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem 3rem; }
+/* ===== Image Grid ===== */
+.img-grid{display:none;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:20px}
+.img-grid.show{display:grid}
+.img-card{border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;position:relative;padding:8px;background:#fff}
+.img-card img{width:100%;height:90px;object-fit:cover;border-radius:6px;background:#f1f5f9}
+.img-card .fname{font-size:11px;font-weight:600;margin:5px 0 2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.img-card .fsize{font-size:11px;color:#94a3b8}
+.img-card .del{position:absolute;top:4px;right:4px;width:20px;height:20px;border-radius:50%;border:none;background:rgba(0,0,0,.4);color:#fff;cursor:pointer;font-size:12px;line-height:0}
 
-        /* Dropzone */
-        .dz {
-            background: var(--card-bg); border: 2px dashed var(--primary);
-            border-radius: var(--r); padding: 3rem 2rem; text-align: center;
-            cursor: pointer; transition: all .3s; margin-bottom: 1.5rem;
-        }
-        .dz:hover, .dz.dragover { border-color: var(--primary); background: var(--primary-l); }
-        .dz-icon { font-size: 3rem; margin-bottom: .5rem; }
-        .dz-title { font-size: 1.1rem; font-weight: 600; }
-        .dz-desc { color: var(--text2); font-size: .9rem; margin: .25rem 0 1rem; }
-        .dz-btn { display: inline-block; padding: .625rem 1.5rem; background: var(--primary); color: #fff; border: none; border-radius: var(--rs); font-size: .95rem; font-weight: 600; cursor: pointer; }
-        .dz-btn:hover { background: var(--primary-h); }
-        .dz-info { font-size: .8rem; color: var(--text2); margin-top: .75rem; }
+/* ===== Controls ===== */
+.ctrl-box{display:none;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:20px 24px;margin-bottom:20px}
+.ctrl-box.show{display:block}
+.ctrl-row{display:flex;flex-wrap:wrap;gap:16px}
+.ctrl-g{flex:1;min-width:130px}
+.ctrl-g label{display:block;font-size:13px;font-weight:600;color:#64748b;margin-bottom:4px}
+.ctrl-g label .val{color:#2563eb;font-size:15px;font-weight:700}
+input[type="range"]{width:100%;height:5px;-webkit-appearance:none;background:#e2e8f0;border-radius:3px;outline:none}
+input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#2563eb;cursor:pointer;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.15)}
+select{padding:7px 10px;border:1px solid #e2e8f0;border-radius:8px;background:#fff;font-size:14px;width:100%;color:#1e293b;cursor:pointer}
 
-        /* Batch list */
-        .batch-bar {
-            background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: var(--r); padding: 1rem 1.25rem; margin-bottom: 1rem;
-            display: none; align-items: center; justify-content: space-between;
-            box-shadow: var(--shadow);
-        }
-        .batch-bar.show { display: flex; }
-        .batch-bar .count { font-weight: 600; }
-        .batch-bar .total { color: var(--text2); font-size: .85rem; }
+/* ===== Progress ===== */
+.progress{display:none;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:14px 20px;margin-bottom:20px}
+.progress.show{display:block}
+.prog-bar{height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden;margin-bottom:8px}
+.prog-fill{height:100%;background:linear-gradient(90deg,#2563eb,#10b981);border-radius:3px;transition:width .3s;width:0}
+.prog-text{font-size:13px;color:#94a3b8;text-align:center}
 
-        /* Image grid */
-        .img-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: .75rem; margin-bottom: 1.5rem;
-        }
-        .img-card {
-            background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: var(--rs); overflow: hidden; box-shadow: var(--shadow);
-            position: relative;
-        }
-        .img-card .thumb {
-            width: 100%; height: 120px; object-fit: cover; display: block;
-            background: repeating-conic-gradient(#e2e8f0 0% 25%, transparent 0% 50%) 0 0 / 16px 16px;
-        }
-        [data-theme="dark"] .img-card .thumb { background: repeating-conic-gradient(#334155 0% 25%, transparent 0% 50%) 0 0 / 16px 16px; }
-        .img-card .info { padding: .5rem .75rem; font-size: .75rem; }
-        .img-card .info .name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
-        .img-card .info .sizes { color: var(--text2); }
-        .img-card .info .savings { color: var(--success); font-weight: 600; }
-        .img-card .remove-btn {
-            position: absolute; top: 4px; right: 4px; width: 24px; height: 24px;
-            border-radius: 50%; border: none; background: rgba(0,0,0,.5); color: #fff;
-            cursor: pointer; font-size: .75rem; display: flex; align-items: center; justify-content: center;
-        }
+/* ===== Sticky bottom ===== */
+.sticky-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;padding:12px 24px;display:none;z-index:50;box-shadow:0 -4px 20px rgba(0,0,0,.06)}
+.sticky-bar.show{display:block}
+.sticky-inner{max-width:720px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.sticky-info{font-size:14px}
+.sticky-info strong{color:#2563eb}
 
-        /* Controls */
-        .controls {
-            background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: var(--r); padding: 1.25rem 1.5rem;
-            margin-bottom: 1.5rem; box-shadow: var(--shadow);
-        }
-        .controls h3 { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; }
-        .ctrl-row { display: flex; flex-wrap: wrap; gap: 1.25rem; align-items: flex-end; }
-        .ctrl-g { flex: 1; min-width: 160px; }
-        .ctrl-g label { display: block; font-size: .85rem; font-weight: 600; color: var(--text2); margin-bottom: .25rem; }
-        .ctrl-g .val { font-size: 1.1rem; font-weight: 700; color: var(--primary); }
-        input[type="range"] { width: 100%; height: 6px; -webkit-appearance: none; background: var(--border); border-radius: 3px; outline: none; margin-top: .25rem; }
-        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: var(--primary); cursor: pointer; border: 2px solid #fff; box-shadow: var(--shadow); }
-        select, input[type="number"] {
-            padding: .5rem; border: 1px solid var(--border); border-radius: var(--rs);
-            background: var(--bg); color: var(--text); font-size: .9rem; width: 100%;
-        }
+/* ===== Comparison Modal ===== */
+.modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.7);z-index:200;display:none;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(4px)}
+.modal-overlay.show{display:flex}
+.modal-content{background:#fff;border-radius:20px;max-width:700px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3);padding:28px;position:relative}
+.modal-close{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;border:none;background:#f1f5f9;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.modal-close:hover{background:#e2e8f0}
+.modal-title{font-size:18px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.compare-wrap{position:relative;width:100%;overflow:hidden;border-radius:12px;border:1px solid #e2e8f0;cursor:ew-resize;user-select:none;touch-action:none}
+.compare-wrap img{display:block;width:100%;height:auto;pointer-events:none;-webkit-user-drag:none}
+.cmp-overlay{position:absolute;top:0;left:0;width:100%;height:100%;z-index:3;clip-path:inset(0 50% 0 0);pointer-events:none}
+.cmp-handle{position:absolute;top:0;bottom:0;width:3px;left:50%;transform:translateX(-50%);z-index:5;pointer-events:none}
+.cmp-handle::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:38px;height:38px;border-radius:50%;background:#fff;border:2.5px solid #2563eb;box-shadow:0 2px 12px rgba(0,0,0,.25)}
+.cmp-handle::after{content:'⟷';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:15px;color:#2563eb;font-weight:bold}
+.cmp-tag{position:absolute;bottom:12px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:5px;z-index:4;pointer-events:none;letter-spacing:.5px}
+.cmp-tag-l{left:12px;background:rgba(37,99,235,.85);color:#fff}
+.cmp-tag-r{right:12px;background:rgba(16,185,129,.85);color:#fff}
+.modal-stats{display:flex;gap:32px;justify-content:center;margin-top:18px;text-align:center}
+.modal-stat .label{font-size:12px;color:#94a3b8;margin-bottom:2px}
+.modal-stat .value{font-size:20px;font-weight:700}
+.modal-stat .value.orig{color:#475569}
+.modal-stat .value.comp{color:#10b981}
+.modal-stat .save{font-size:16px;font-weight:700;color:#10b981;margin-top:6px}
+.modal-actions{display:flex;gap:12px;justify-content:center;margin-top:20px}
 
-        /* Buttons */
-        .btn { padding: .75rem 1.5rem; border: none; border-radius: var(--rs); font-size: .95rem; font-weight: 600; cursor: pointer; transition: all .2s; }
-        .btn-primary { background: var(--primary); color: #fff; }
-        .btn-primary:hover { background: var(--primary-h); transform: translateY(-1px); box-shadow: var(--shadow-lg); }
-        .btn-success { background: var(--success); color: #fff; }
-        .btn-success:hover { opacity: .9; }
-        .btn-secondary { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
-        .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
-        .btn-outline:hover { background: var(--primary-l); }
-        .btn-lg { padding: 1rem 2.5rem; font-size: 1.05rem; }
-        .btn-group { display: flex; gap: .75rem; flex-wrap: wrap; justify-content: center; margin: 1rem 0; }
-        .btn:disabled { opacity: .5; cursor: not-allowed; transform: none !important; }
+/* ===== Showcase comparison slider ===== */
+.demo-wrap{margin-bottom:32px;text-align:center}
+.demo-wrap h3{font-size:18px;font-weight:700;margin-bottom:16px}
+.showcase-compare{max-width:820px;margin:0 auto;border-radius:14px;overflow:hidden;border:1px solid #e2e8f0;box-shadow:0 4px 24px rgba(0,0,0,.06);background:#f1f5f9}
 
-        .progress-wrap {
-            background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: var(--r); padding: 1.25rem; margin-bottom: 1.5rem;
-            display: none; box-shadow: var(--shadow);
-        }
-        .progress-wrap.show { display: block; }
-        .progress-bar {
-            width: 100%; height: 8px; background: var(--border); border-radius: 4px;
-            overflow: hidden; margin-bottom: .5rem;
-        }
-        .progress-fill {
-            height: 100%; background: linear-gradient(90deg, var(--primary), var(--success));
-            border-radius: 4px; transition: width .3s; width: 0%;
-        }
-        .progress-text { font-size: .85rem; color: var(--text2); text-align: center; }
+/* Showcase comparison slider (clip-path based - no offsetWidth dependency) */
+.sh-cmp{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;cursor:ew-resize;user-select:none;touch-action:none;background:#e2e8f0}
+/* pointer-events:none on children — all mouse events hit the container directly, prevents native image drag */
+.sh-cmp-base{display:block;width:100%;height:100%;pointer-events:none;-webkit-user-drag:none}
+.sh-cmp-overlay{position:absolute;top:0;left:0;width:100%;height:100%;z-index:3;clip-path:inset(0 50% 0 0);pointer-events:none}
+.sh-cmp-img{display:block;width:100%;height:100%;pointer-events:none;-webkit-user-drag:none}
+.sh-cmp-line{position:absolute;top:0;bottom:0;width:2px;background:#fff;left:50%;z-index:10;pointer-events:none;box-shadow:0 0 6px rgba(0,0,0,.2)}
+.sh-cmp-knob{position:absolute;top:50%;left:50%;z-index:11;pointer-events:none;width:40px;height:40px;border-radius:50%;background:#fff;border:2.5px solid #2563eb;box-shadow:0 2px 8px rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center;transform:translate(-50%,-50%);font-size:16px;color:#2563eb;font-weight:700}
 
-        /* Pro teaser */
-        .pro-teaser {
-            background: linear-gradient(135deg, #fef3c7, #fde68a);
-            border: 2px solid #f59e0b; border-radius: var(--r);
-            padding: 1.5rem; margin-bottom: 1.5rem; text-align: center;
-        }
-        [data-theme="dark"] .pro-teaser { background: linear-gradient(135deg, #451a03, #78350f); border-color: #f59e0b; }
-        .pro-teaser h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: .25rem; }
-        .pro-teaser p { font-size: .9rem; color: var(--text2); margin-bottom: .75rem; }
-        .pro-teaser ul { list-style: none; display: flex; flex-wrap: wrap; gap: .5rem; justify-content: center; margin-bottom: .75rem; }
-        .pro-teaser ul li { font-size: .85rem; padding: .25rem .75rem; background: rgba(255,255,255,.5); border-radius: 999px; }
-        [data-theme="dark"] .pro-teaser ul li { background: rgba(0,0,0,.3); }
+/* ===== Footer ===== */
+footer{text-align:center;padding:20px;color:#94a3b8;font-size:13px}
 
-        /* Ad placeholder */
-        .ad-ph {
-            background: var(--card-bg); border: 2px dashed var(--border);
-            border-radius: var(--rs); display: flex; align-items: center; justify-content: center;
-            color: var(--text2); font-size: .8rem; margin: 1rem auto;
-        }
-        .ad-ph.banner { max-width: 728px; min-height: 90px; }
-        .ad-ph.side { max-width: 300px; min-height: 250px; margin: 0 auto; }
-        .ad-ph.inline { max-width: 100%; min-height: 60px; }
+/* Tab pages */
+.page-compress{display:none}
+.page-compress.show{display:block}
 
-        /* Features */
-        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 1rem; margin: 1.5rem 0; }
-        .feat { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--r); padding: 1.25rem; text-align: center; box-shadow: var(--shadow); }
-        .feat-icon { font-size: 2rem; margin-bottom: .5rem; }
-        .feat h4 { font-size: 1rem; margin-bottom: .25rem; }
-        .feat p { font-size: .85rem; color: var(--text2); }
+/* ===== Toast ===== */
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#334155;color:#fff;padding:10px 24px;border-radius:10px;font-size:14px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:999}
+.toast.show{opacity:1}
 
-        /* How-to + FAQ */
-        .section-card {
-            background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: var(--r); padding: 2rem; margin: 1.5rem 0; box-shadow: var(--shadow);
-        }
-        .section-card h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 1.25rem; text-align: center; }
-        .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 1.5rem; }
-        .step { text-align: center; }
-        .step-n { width: 40px; height: 40px; background: var(--primary); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; margin: 0 auto .75rem; }
-        .step h4 { font-size: 1rem; margin-bottom: .375rem; }
-        .step p { font-size: .85rem; color: var(--text2); }
-        .faq-item { padding: 1rem 0; border-bottom: 1px solid var(--border); }
-        .faq-item:last-child { border-bottom: none; }
-        .faq-q { font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; }
-        .faq-q::after { content: '+'; }
-        .faq-q.open::after { content: '−'; }
-        .faq-a { font-size: .9rem; color: var(--text2); margin-top: .5rem; display: none; }
-        .faq-a.open { display: block; }
-        .faq-a.visible { display: block; }
+/* ===== Dark Mode ===== */
+body.dark{background:#0f172a;color:#e2e8f0}
+body.dark nav{background:#1e293b;border-color:#334155}
+body.dark .nav-link{color:#94a3b8}
+body.dark .nav-link:hover{background:#334155;color:#e2e8f0}
+body.dark .nav-link.active{background:#1e3a5f;color:#60a5fa}
+body.dark .nav-icon-btn{background:transparent;border-color:#334155;color:#94a3b8}
+body.dark .page-home .sub{color:#94a3b8}
+body.dark .dz-wrap,.dark .count-bar,.dark .ctrl-box,.dark .progress,.dark .modal-content{background:#1e293b;border-color:#334155}
+body.dark .dz-wrap:hover{background:#1e3a5f}
+body.dark .img-card{background:#1e293b;border-color:#334155}
+body.dark select{background:#0f172a;color:#e2e8f0;border-color:#334155}
+body.dark .sticky-bar{background:#1e293b;border-color:#334155}
+body.dark .btn-outline{border-color:#334155;color:#94a3b8}
+body.dark .btn-outline:hover{border-color:#60a5fa;color:#60a5fa}
+body.dark .modal-close{background:#334155;color:#e2e8f0}
+body.dark footer{color:#64748b}
+body.dark .sh-cmp{background:#334155}
+body.dark .sh-cmp-knob{border-color:#60a5fa;color:#60a5fa}
+body.dark .cmp-tag-l{background:rgba(96,165,250,.85)}
+body.dark .showcase-compare{border-color:#334155;box-shadow:0 4px 24px rgba(0,0,0,.2);background:#1e293b}
+body.dark .sh-feat{border-color:#334155!important}
+body.dark .sh-feat-icon{background:#1e3a5f!important}
+body.dark .sh-sub{color:#94a3b8!important}
+body.dark .cmp-handle::before{border-color:#60a5fa}
+body.dark .cmp-handle::after{color:#60a5fa}
+body.dark .compare-wrap{border-color:#334155}
 
-        /* Layout */
-        @media (min-width: 768px) {
-            .layout { display: grid; grid-template-columns: 1fr 300px; gap: 1.5rem; align-items: start; }
-        }
-
-        footer { text-align: center; padding: 2rem 1.5rem; border-top: 1px solid var(--border); color: var(--text2); font-size: .85rem; }
-
-        .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); background: var(--text); color: var(--bg); padding: .75rem 1.5rem; border-radius: var(--rs); font-size: .875rem; opacity: 0; transition: opacity .3s; pointer-events: none; z-index: 999; }
-        .toast.show { opacity: 1; }
-
-        @media (max-width: 640px) {
-            .hero h1 { font-size: 1.75rem; }
-            .hero { padding: 2rem 1rem 1rem; }
-            .dz { padding: 2rem 1rem; }
-            .img-grid { grid-template-columns: repeat(auto-fill, minmax(140px,1fr)); }
-        }
-    </style>
+@media(max-width:640px){
+.page{padding:24px 16px 80px}
+.page-home h1{font-size:28px}
+.nav-inner{gap:16px;padding:0 16px}
+.nav-links{gap:2px}
+.nav-link{padding:6px 10px;font-size:13px}
+.modal-content{padding:20px;margin:12px}
+.modal-stats{gap:16px}
+}
+</style>
 </head>
 <body>
 
-<header>
-    <div class="hdr">
-        <a href="#" class="logo"><span class="logo-icon">📷</span> QuickImgCompress</a>
-        <div class="hdr-actions">
-            <span class="pro-badge" onclick="showPro()">Pro</span>
-            <button class="theme-btn" id="themeToggle">🌙</button>
-        </div>
+<!-- ===== NAV ===== -->
+<nav>
+<div class="nav-inner">
+<a href="#" class="nav-logo">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+QuickImgCompress
+</a>
+<div class="nav-links">
+<button class="nav-link active" data-page="compress" data-i="navCompress">图片压缩</button>
+<button class="nav-link" data-page="features" data-i="navFeatures">功能介绍</button>
+</div>
+<div class="nav-right">
+<button class="nav-icon-btn" id="langBtn">EN</button>
+<button class="nav-icon-btn" id="themeBtn">🌙</button>
+</div>
+</div>
+</nav>
+
+<!-- ===== PAGE: Compress ===== -->
+<div class="page page-compress show" id="pageCompress">
+
+<!-- Upload Zone -->
+<div class="dz-wrap" id="dropzone">
+<div class="dz-icon"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+<div class="dz-title" data-i="dzTitle">把图片拖到此处</div>
+<div class="dz-sub" data-i="dzSub">或点击选择文件</div>
+<button class="dz-btn" id="uploadBtn" data-i="dzBtn">选择文件</button>
+<input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" multiple hidden>
+<div class="dz-info" data-i="dzInfo">支持 JPEG / PNG / WebP · 单张最大 20MB</div>
+</div>
+
+<!-- Demo Comparison -->
+<div class="demo-wrap">
+  <h3 data-i="demoTitle">压缩效果演示</h3>
+  <div class="showcase-compare">
+    <div class="sh-cmp" id="shCmpWrap">
+      <img id="shOrig" class="sh-cmp-base" alt="Original">
+      <div class="sh-cmp-overlay" id="shOverlay">
+        <img id="shCompLossless" class="sh-cmp-img" alt="Lossless">
+        <img id="shCompHigh" class="sh-cmp-img" alt="High" style="display:none">
+      </div>
+      <div class="sh-cmp-line" id="shLine"></div>
+      <div class="sh-cmp-knob" id="shKnob"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg></div>
+      <div class="cmp-tag cmp-tag-l" data-i="cmpOrig">Original</div>
+      <div class="cmp-tag cmp-tag-r" data-i="cmpComp">Compressed</div>
     </div>
-</header>
+  </div>
+</div>
 
-<section class="hero">
-    <h1>Free Online <span>Image Compressor</span></h1>
-    <p>Compress and resize JPEG, PNG, and WebP images instantly. Batch compress multiple images at once. 100% private — nothing leaves your browser.</p>
-</section>
+<!-- Count bar -->
+<div class="count-bar" id="countBar">
+<div><span class="count-num" id="countNum">0</span> <span data-i="filesLabel">个文件</span></div>
+<div class="count-actions">
+<button class="cmp-btn" id="compressBtn" style="background:#2563eb;color:#fff"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> <span data-i="compressAll">全部压缩</span></button>
+<button class="clear-btn" id="clearBtn" data-i="clearAll">清空</button>
+</div>
+</div>
 
-<div class="container">
+<!-- Image Grid -->
+<div class="img-grid" id="imgGrid"></div>
 
-    <div class="ad-ph banner"></div>
+<!-- Controls -->
+<div class="ctrl-box" id="ctrlBox">
+<div class="ctrl-row">
+<div class="ctrl-g"><label data-i="qualityLabel">质量: <span class="val" id="qualityVal">80</span>%</label><input type="range" id="qualitySlider" min="1" max="100" value="80"></div>
+<div class="ctrl-g"><label data-i="formatLabel">输出格式</label><select id="formatSelect"><option value="jpeg">JPEG</option><option value="png">PNG</option><option value="webp">WebP</option></select></div>
+<div class="ctrl-g"><label data-i="widthLabel">最大宽度</label><select id="widthSelect"><option value="0" data-i="origWidth">原始</option><option value="1920">1920px</option><option value="1280">1280px</option><option value="800">800px</option></select></div>
+</div>
+</div>
 
-    <div class="layout">
-        <div class="main">
+<!-- Progress -->
+<div class="progress" id="progressArea">
+<div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
+<div class="prog-text" id="progText" data-i="processing">处理中...</div>
+</div>
 
-            <!-- Dropzone -->
-            <div class="dz" id="dropzone">
-                <div class="dz-icon">📸</div>
-                <div class="dz-title">Drop images here</div>
-                <div class="dz-desc">or click to browse</div>
-                <button class="dz-btn" id="uploadBtn">Choose Images</button>
-                <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" multiple hidden>
-                <div class="dz-info">Supports JPEG, PNG, WebP &bull; Unlimited files &bull; Max 20MB each</div>
-            </div>
-
-            <!-- Batch bar -->
-            <div class="batch-bar" id="batchBar">
-                <div>
-                    <span class="count" id="batchCount">0</span> images selected
-                    <span class="total">(<span id="batchTotalSize">0</span>)</span>
-                </div>
-                <div class="btn-group" style="margin:0;">
-                    <button class="btn btn-success" id="compressAllBtn">⚡ Compress All</button>
-                    <button class="btn btn-secondary" id="clearAllBtn">Clear All</button>
-                </div>
-            </div>
-
-            <!-- Image grid -->
-            <div class="img-grid" id="imgGrid"></div>
-
-            <!-- Controls -->
-            <div class="controls" id="controls" style="display:none;">
-                <h3>⚙️ Compression Settings</h3>
-                <div class="ctrl-row">
-                    <div class="ctrl-g">
-                        <label>Quality: <span class="val" id="qualityVal">80</span>%</label>
-                        <input type="range" id="qualitySlider" min="1" max="100" value="80">
-                    </div>
-                    <div class="ctrl-g">
-                        <label>Output Format</label>
-                        <select id="outputFmt">
-                            <option value="jpeg">JPEG</option>
-                            <option value="png">PNG</option>
-                            <option value="webp">WebP</option>
-                        </select>
-                    </div>
-                    <div class="ctrl-g">
-                        <label>Max Width</label>
-                        <select id="maxWidth">
-                            <option value="0">Original</option>
-                            <option value="1920">1920 px</option>
-                            <option value="1280">1280 px</option>
-                            <option value="800">800 px</option>
-                            <option value="400">400 px</option>
-                        </select>
-                    </div>
-                </div>
-                <p style="font-size:.8rem;color:var(--text2);margin-top:.75rem;">Settings apply to all images when you click "Compress All"</p>
-            </div>
-
-            <!-- Progress -->
-            <div class="progress-wrap" id="progressWrap">
-                <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-                <div class="progress-text" id="progressText">Processing...</div>
-            </div>
-
-            <!-- Download all -->
-            <div class="btn-group" id="downloadGroup" style="display:none;">
-                <button class="btn btn-primary btn-lg" id="downloadZipBtn">📦 Download All as ZIP</button>
-                <button class="btn btn-secondary" id="resetAllBtn">🔄 Start Over</button>
-            </div>
-
-            <!-- Pro teaser -->
-            <div class="pro-teaser" id="proTeaser">
-                <h3>⭐ Upgrade to Pro</h3>
-                <p>Unlock advanced features for power users</p>
-                <ul>
-                    <li>✅ ZIP Batch Download</li>
-                    <li>✅ Unlimited Image Size</li>
-                    <li>✅ Higher Quality Presets</li>
-                    <li>✅ Priority Support</li>
-                    <li>✅ No Ads</li>
-                </ul>
-                <button class="btn btn-outline btn-lg" onclick="showPro()">Coming Soon</button>
-            </div>
-
-            <div class="ad-ph inline"></div>
-
-            <div class="section-card">
-                <h2>📖 How to Compress Images Online (4 Simple Steps)</h2>
-                <div class="steps">
-                    <div class="step"><div class="step-n">1</div><h4>Upload</h4><p>Drag & drop or select one or multiple images from your device.</p></div>
-                    <div class="step"><div class="step-n">2</div><h4>Adjust</h4><p>Set quality, output format, and max width using the controls.</p></div>
-                    <div class="step"><div class="step-n">3</div><h4>Compress</h4><p>Click "Compress All" to process all images at once.</p></div>
-                    <div class="step"><div class="step-n">4</div><h4>Download</h4><p>Download individual images or the entire batch as a ZIP file.</p></div>
-                </div>
-            </div>
-
-            <!-- Features -->
-            <div class="features">
-                <div class="feat"><div class="feat-icon">🔒</div><h4>100% Private</h4><p>All processing in your browser. Nothing uploaded to any server.</p></div>
-                <div class="feat"><div class="feat-icon">⚡</div><h4>Batch Processing</h4><p>Compress multiple images at once. Download as ZIP or individually.</p></div>
-                <div class="feat"><div class="feat-icon">🆓</div><h4>Completely Free</h4><p>No sign-ups, no limits. Unlimited compressions at no cost.</p></div>
-                <div class="feat"><div class="feat-icon">📐</div><h4>Resize & Convert</h4><p>Change image dimensions and convert between JPEG, PNG, and WebP.</p></div>
-            </div>
-
-            <div class="ad-ph inline"></div>
-
-            <!-- FAQ -->
-            <div class="section-card">
-                <h2>Frequently Asked Questions</h2>
-                <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Is this image compressor really free?</div><div class="faq-a">Yes, completely free with no limits. Compress as many images as you want, as often as you need.</div></div>
-                <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Can I compress multiple images at once?</div><div class="faq-a">Yes! Simply select multiple images and click "Compress All". You can then download them individually or as a ZIP file.</div></div>
-                <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Are my images uploaded to a server?</div><div class="faq-a">No. All processing happens locally in your browser using WebAssembly. Your images never leave your device — 100% private and secure.</div></div>
-                <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What image formats are supported?</div><div class="faq-a">We support JPEG, PNG, and WebP. You can also convert between formats during compression (e.g., PNG to JPEG).</div></div>
-                <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Can I resize images while compressing?</div><div class="faq-a">Yes. Use the "Max Width" option to resize images proportionally. Choose from preset widths or keep the original size.</div></div>
-                <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How much can I reduce file size?</div><div class="faq-a">Typically 50-80% reduction depending on the quality setting and image type. At 80% quality, the visual difference is usually unnoticeable.</div></div>
-                <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Is there a file size or quantity limit?</div><div class="faq-a">Free version: max 20MB per file, unlimited files. Pro version removes the 20MB limit for larger images.</div></div>
-            </div>
-
-        </div>
-        <div class="sidebar">
-            <div class="ad-ph side" style="position:sticky;top:80px;"></div>
-        </div>
-    </div>
+<!-- Sticky bottom -->
+<div class="sticky-bar" id="stickyBar">
+<div class="sticky-inner">
+<div class="sticky-info"><span data-i="readyLabel">已压缩</span> <strong id="readyCount">0</strong> <span data-i="filesReady">张</span></div>
+<div>
+<button class="clear-btn" id="startOverBtn" style="margin-right:8px" data-i="startOver">重新开始</button>
+<button class="cmp-btn" id="downloadBtn" style="background:#2563eb;color:#fff"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> <span data-i="downloadAll">下载全部</span></button>
+</div>
+</div>
+</div>
 
 </div>
 
-<footer>
-    <p>&copy; 2026 QuickImgCompress.com &mdash; Free online image compression &amp; optimization tool</p>
-</footer>
+<!-- ===== PAGE: Features ===== -->
+<div class="page page-features" id="pageFeatures">
+
+<div class="showcase" style="text-align:center">
+  <h2 style="font-size:28px;font-weight:800;margin-bottom:8px" data-i="ftTitle">智能图片压缩工具</h2>
+  <p class="sh-sub" style="color:#64748b;font-size:15px;line-height:1.7;max-width:540px;margin:0 auto 32px" data-i="ftSub">在浏览器本地完成图片压缩，保护隐私安全。支持 JPEG、PNG、WebP 格式，自由调节质量与尺寸。</p>
+  <button class="btn btn-primary btn-lg" onclick="switchPage('compress')" data-i="ftStart">开始压缩</button>
+</div>
+
+<div class="sh-features" style="margin:48px 0 0">
+  <div class="sh-feat" style="display:flex;gap:14px;padding:20px 0;border-top:1px solid #e2e8f0">
+    <div class="sh-feat-icon" style="flex-shrink:0;width:38px;height:38px;border-radius:10px;background:#eff6ff;display:flex;align-items:center;justify-content:center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+    <div>
+      <h4 style="font-size:15px;font-weight:600;margin-bottom:2px" data-i="ftF1">更小的图片，更快的网站</h4>
+      <p style="font-size:13px;color:#64748b;line-height:1.6" data-i="ftF1d">网站图片通常过大且未针对网页优化。通过压缩图片，你可以节省数兆字节的空间，而几乎察觉不到画质损失。</p>
+    </div>
+  </div>
+  <div class="sh-feat" style="display:flex;gap:14px;padding:20px 0;border-top:1px solid #e2e8f0">
+    <div class="sh-feat-icon" style="flex-shrink:0;width:38px;height:38px;border-radius:10px;background:#eff6ff;display:flex;align-items:center;justify-content:center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg></div>
+    <div>
+      <h4 style="font-size:15px;font-weight:600;margin-bottom:2px" data-i="ftF2">浏览器处理，保护隐私</h4>
+      <p style="font-size:13px;color:#64748b;line-height:1.6" data-i="ftF2d">所有图片压缩在浏览器本地完成，不上传任何服务器。你的图片永远留在你自己的设备上。</p>
+    </div>
+  </div>
+  <div class="sh-feat" style="display:flex;gap:14px;padding:20px 0;border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0">
+    <div class="sh-feat-icon" style="flex-shrink:0;width:38px;height:38px;border-radius:10px;background:#eff6ff;display:flex;align-items:center;justify-content:center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></div>
+    <div>
+      <h4 style="font-size:15px;font-weight:600;margin-bottom:2px" data-i="ftF3">高质量压缩</h4>
+      <p style="font-size:13px;color:#64748b;line-height:1.6" data-i="ftF3d">在保持画质的同时实现大幅压缩。QuickImgCompress 可以帮你大幅减少图片体积，同时保持高画质，肉眼几乎看不出区别。</p>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!-- ===== MODAL ===== -->
+<div class="modal-overlay" id="modalOverlay">
+<div class="modal-content">
+<button class="modal-close" id="modalClose">✕</button>
+<div class="modal-title">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+<span data-i="modalTitle">压缩前后对比</span>
+</div>
+<div class="compare-wrap" id="cmpWrap">
+<img id="cmpOriginal" alt="Original">
+<div class="cmp-overlay" id="cmpOverlay"><img id="cmpCompressed" alt="Compressed"></div>
+<div class="cmp-handle" id="cmpHandle"></div>
+<div class="cmp-tag cmp-tag-l" data-i="cmpOrig">原图</div>
+<div class="cmp-tag cmp-tag-r" data-i="cmpComp">压缩后</div>
+</div>
+<div class="modal-stats">
+<div class="modal-stat"><div class="label" data-i="originalSize">原始大小</div><div class="value orig" id="origStat">-</div></div>
+<div class="modal-stat"><div class="label" data-i="compressedSize">压缩后</div><div class="value comp" id="compStat">-</div><div class="save" id="saveStat">-</div></div>
+</div>
+<div class="modal-actions">
+<button class="btn btn-outline" id="modalCloseBtn" data-i="modalClose">关闭</button>
+<button class="btn btn-primary" id="modalDownloadBtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> <span data-i="modalDownload">下载压缩后图片</span></button>
+</div>
+</div>
+</div>
+
+<!-- ===== Footer ===== -->
+<footer data-i="footer">© 2026 QuickImgCompress.com · 在线图片压缩工具</footer>
 
 <div class="toast" id="toast"></div>
 
 <script>
-    // ===== Theme =====
-    const st = localStorage.getItem('theme') || 'light';
-    document.documentElement.setAttribute('data-theme', st);
-    document.getElementById('themeToggle').textContent = st === 'dark' ? '☀️' : '🌙';
-    document.getElementById('themeToggle').addEventListener('click', () => {
-        const n = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', n);
-        localStorage.setItem('theme', n);
-        document.getElementById('themeToggle').textContent = n === 'dark' ? '☀️' : '🌙';
+// ===== i18n =====
+const I={zh:{navCompress:'图片压缩',navFeatures:'功能介绍',
+dzTitle:'把图片拖到此处',dzSub:'或点击选择文件',dzBtn:'选择文件',dzInfo:'支持 JPEG / PNG / WebP · 单张最大 20MB',
+filesLabel:'个文件',compressAll:'全部压缩',clearAll:'清空',
+qualityLabel:'质量',formatLabel:'输出格式',widthLabel:'最大宽度',origWidth:'原始',
+processing:'处理中...',readyLabel:'已压缩',filesReady:'张',startOver:'重新开始',downloadAll:'下载全部',
+modalTitle:'压缩前后对比',originalSize:'原始大小',compressedSize:'压缩后',modalClose:'关闭',modalDownload:'下载压缩后图片',
+cmpOrig:'原图',cmpComp:'压缩后',
+shTitle:'选择压缩模式',shSub:'在 Lossless（无损）和 High Quality（高质量）之间切换，在画质和文件大小之间找到最佳平衡。<strong>看出区别了吗？</strong>',
+shLossless:'无损',shHigh:'高质量',shBefore:'压缩前',shAfter:'压缩后',
+shF1:'更小的图片，更快的网站',shF1d:'网站图片通常过大且未针对网页优化。通过压缩图片，你可以节省数兆字节的空间，而几乎察觉不到画质损失。',
+shF2:'SEO 与 Lighthouse 优化',shF2d:'压缩你的图片，提升 SEO 排名。获得更高的 Lighthouse 分数，提高在搜索引擎中的可见度。',
+shF3:'高质量图片压缩',shF3d:'在保持画质的同时实现大幅压缩。QuickImgCompress 可以帮你大幅减少图片体积，同时保持高画质，肉眼几乎看不出区别。',
+startNow:'开始压缩',
+demoTitle:'压缩效果演示',ftTitle:'智能图片压缩工具',ftSub:'在浏览器本地完成图片压缩，保护隐私安全。支持 JPEG、PNG、WebP 格式，自由调节质量与尺寸。',ftStart:'开始压缩',
+ftF1:'更小的图片，更快的网站',ftF1d:'网站图片通常过大且未针对网页优化。通过压缩图片，你可以节省数兆字节的空间，而几乎察觉不到画质损失。',
+ftF2:'浏览器处理，保护隐私',ftF2d:'所有图片压缩在浏览器本地完成，不上传任何服务器。你的图片永远留在你自己的设备上。',
+ftF3:'高质量压缩',ftF3d:'在保持画质的同时实现大幅压缩。QuickImgCompress 可以帮你大幅减少图片体积，同时保持高画质，肉眼几乎看不出区别。',
+footer:'© 2026 QuickImgCompress.com · 在线图片压缩工具'
+},
+en:{navCompress:'Image Compressor',navFeatures:'Features',
+dzTitle:'Drop images here',dzSub:'or click to browse',dzBtn:'Choose Files',dzInfo:'JPEG / PNG / WebP · Max 20MB',
+filesLabel:'files selected',compressAll:'Compress All',clearAll:'Clear',
+qualityLabel:'Quality',formatLabel:'Format',widthLabel:'Max Width',origWidth:'Original',
+processing:'Processing...',readyLabel:'Compressed',filesReady:'files',startOver:'Start Over',downloadAll:'Download All',
+modalTitle:'Before & After',originalSize:'Original Size',compressedSize:'Compressed Size',modalClose:'Close',modalDownload:'Download Compressed',
+cmpOrig:'Original',cmpComp:'Compressed',
+shTitle:'Choose between compression modes',shSub:'Choose between <strong>Lossless</strong> or <strong>High Quality</strong> compression to get the best balance between image quality and file size. <strong>See any difference?</strong>',
+shLossless:'Lossless',shHigh:'High Quality',shBefore:'Size before',shAfter:'After',
+shF1:'Smaller images, Faster websites',shF1d:'Websites images are usually too big and unoptimized for web purposes. It is easy to save a few megabytes by compressing your assets without noticing any loss in quality.',
+shF2:'SEO and Lighthouse optimized',shF2d:'Compress your images and improve your SEO ranking. Get a higher Lighthouse score and increase your visibility in search engines.',
+shF3:'High quality image compression',shF3d:'Achieve huge compressions while keeping the quality of the picture intact. QuickImgCompress can help you reduce drastically the size of your images whilst maintaining a high quality with almost no difference visible to the eye.',
+startNow:'Get Started',
+demoTitle:'Demo: See the difference',ftTitle:'Smart Image Compression Tool',ftSub:'Compress images directly in your browser — privacy guaranteed. Supports JPEG, PNG, WebP. Fine-tune quality and size with ease.',ftStart:'Get Started',
+ftF1:'Smaller images, Faster websites',ftF1d:'Websites images are usually too big and unoptimized for web purposes. It is easy to save a few megabytes by compressing your assets without noticing any loss in quality.',
+ftF2:'Browser-based, privacy first',ftF2d:'All compression happens in your browser. No images are ever uploaded to any server. Your files stay on your device.',
+ftF3:'High quality compression',ftF3d:'Achieve huge compressions while keeping the quality of the picture intact. QuickImgCompress can help you reduce drastically the size of your images whilst maintaining a high quality with almost no difference visible to the eye.',
+footer:'© 2026 QuickImgCompress.com · Online image compression tool'
+}};
+let lang=localStorage.getItem('lang')||'zh';
+function applyLang(l){
+const d=I[l];
+document.querySelectorAll('[data-i]').forEach(el=>{const k=el.dataset.i;if(d[k]!==undefined){if(k==='shSub')el.innerHTML=d[k];else el.textContent=d[k]}});
+document.getElementById('langBtn').textContent=l==='zh'?'EN':'中';
+}
+function toggleLang(){lang=lang==='zh'?'en':'zh';localStorage.setItem('lang',lang);applyLang(lang);}
+document.getElementById('langBtn').addEventListener('click',toggleLang);
+applyLang(lang);
+
+// ===== Theme =====
+const tBtn=document.getElementById('themeBtn');
+let dark=localStorage.getItem('theme')==='dark';
+if(dark)document.body.classList.add('dark');
+tBtn.textContent=dark?'☀️':'🌙';
+tBtn.addEventListener('click',()=>{dark=!dark;localStorage.setItem('theme',dark?'dark':'light');document.body.classList.toggle('dark');tBtn.textContent=dark?'☀️':'🌙'});
+
+// ===== Page Switch =====
+function switchPage(p){
+document.querySelectorAll('.nav-link').forEach(l=>l.classList.toggle('active',l.dataset.page===p));
+document.getElementById('pageCompress').classList.toggle('show',p==='compress');
+document.getElementById('pageFeatures').classList.toggle('show',p==='features');
+}
+document.querySelectorAll('.nav-link').forEach(l=>l.addEventListener('click',()=>switchPage(l.dataset.page)));
+
+// ===== Toast =====
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
+
+// ===== State =====
+let files=[];let compressed=new Map();let processing=false;
+const dz=document.getElementById('dropzone');
+const fi=document.getElementById('fileInput');
+const grid=document.getElementById('imgGrid');
+const cb=document.getElementById('countBar');
+const cn=document.getElementById('countNum');
+const ctrl=document.getElementById('ctrlBox');
+const qs=document.getElementById('qualitySlider');
+const qv=document.getElementById('qualityVal');
+const fs=document.getElementById('formatSelect');
+const ws=document.getElementById('widthSelect');
+const pa=document.getElementById('progressArea');
+const pf=document.getElementById('progFill');
+const pt=document.getElementById('progText');
+const sb=document.getElementById('stickyBar');
+const rc=document.getElementById('readyCount');
+const dl=document.getElementById('downloadBtn');
+const so=document.getElementById('startOverBtn');
+const cpBtn=document.getElementById('compressBtn');
+const clBtn=document.getElementById('clearBtn');
+
+// Dropzone
+dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('dragover')});
+dz.addEventListener('dragleave',()=>dz.classList.remove('dragover'));
+dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('dragover');if(e.dataTransfer.files.length)addFiles([...e.dataTransfer.files])});
+document.getElementById('uploadBtn').addEventListener('click',()=>fi.click());
+fi.addEventListener('change',e=>{if(e.target.files.length)addFiles([...e.target.files]);fi.value=''});
+qs.addEventListener('input',()=>{qv.textContent=qs.value;if(files.length===1)debounceCompress()});
+
+let dt;
+function debounceCompress(){clearTimeout(dt);dt=setTimeout(compressSingle,300)}
+
+function addFiles(fl){
+const v=fl.filter(f=>{const t=f.type;if(!['image/jpeg','image/png','image/webp'].includes(t))return false;if(f.size>20*1024*1024)return false;return true});
+if(!v.length)return;
+files=[...files,...v];
+renderGrid();
+ctrl.classList.add('show');
+if(files.length===1&&compressed.size===0)compressSingle();
+}
+
+function renderGrid(){
+grid.innerHTML='';
+grid.classList.toggle('show',files.length>0);
+cb.classList.toggle('show',files.length>0);
+cn.textContent=files.length;
+files.forEach((f,i)=>{
+const c=document.createElement('div');c.className='img-card';
+const img=document.createElement('img');img.src=URL.createObjectURL(f);c.appendChild(img);
+const n=document.createElement('div');n.className='fname';n.textContent=f.name.length>12?f.name.slice(0,10)+'..':f.name;c.appendChild(n);
+const sz=document.createElement('div');sz.className='fsize';
+const cp=compressed.get(i);
+if(cp){
+const sv=Math.round((1-cp.size/f.size)*100);
+sz.innerHTML=`<span style="text-decoration:line-through;color:#ef4444">${fmt(f.size)}</span> → <span style="color:#10b981;font-weight:600">${fmt(cp.size)}</span>`;
+const sv2=document.createElement('div');sv2.style.cssText='font-size:11px;color:#10b981;font-weight:600';sv2.textContent=`-${sv}%`;c.appendChild(sv2);
+}else{sz.textContent=fmt(f.size)}
+c.appendChild(sz);
+const d=document.createElement('button');d.className='del';d.textContent='×';d.onclick=()=>{files.splice(i,1);compressed.delete(i);renderGrid();if(!files.length)resetAll()};c.appendChild(d);
+grid.appendChild(c);
+});
+updateSticky();
+}
+
+// ===== Compress Single =====
+function compressSingle(){
+if(!files.length||files.length>1)return;
+const f=files[0];const q=parseInt(qs.value)/100;const fmt=fs.value;const mw=parseInt(ws.value);
+const m={jpeg:'image/jpeg',png:'image/png',webp:'image/webp'};
+const img=new Image();
+img.onload=()=>{
+const c=document.createElement('canvas');let w=img.width,h=img.height;
+if(mw>0&&w>mw){h=Math.round((mw/w)*h);w=mw}
+c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);
+c.toBlob(blob=>{compressed.set(0,blob);renderGrid();showModal(f,blob)},m[fmt]||'image/jpeg',q);
+};
+img.src=URL.createObjectURL(f);
+}
+
+// ===== Compress All =====
+cpBtn.addEventListener('click',()=>{
+if(processing)return;
+const idxs=files.map((f,i)=>i).filter(i=>!compressed.has(i));
+if(!idxs.length)return;
+processing=true;cpBtn.disabled=true;
+pa.classList.add('show');pf.style.width='0';
+let done=0;const total=idxs.length;
+const L=I[lang];const q=parseInt(qs.value)/100;const fmt=fs.value;const mw=parseInt(ws.value);
+const m={jpeg:'image/jpeg',png:'image/png',webp:'image/webp'};
+function next(){
+if(done>=total){processing=false;cpBtn.disabled=false;pt.textContent='✅ '+(L==='zh'?'压缩完成':'Complete');pf.style.width='100%';updateSticky();return;}
+const idx=idxs[done];pt.textContent=(L==='zh'?`处理中 ${done+1}/${total}`:`Processing ${done+1}/${total}`)+': '+files[idx].name;
+const img=new Image();
+img.onload=()=>{
+const c=document.createElement('canvas');let w=img.width,h=img.height;
+if(mw>0&&w>mw){h=Math.round((mw/w)*h);w=mw}
+c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);
+c.toBlob(blob=>{compressed.set(idx,blob);done++;pf.style.width=`${(done/total)*100}%`;renderGrid();next()},m[fmt]||'image/jpeg',q);
+};
+img.src=URL.createObjectURL(files[idx]);
+}
+next();
+});
+
+// ===== Modal =====
+const mo=document.getElementById('modalOverlay');
+const mc=document.getElementById('modalClose');
+const mcb=document.getElementById('modalCloseBtn');
+const mdb=document.getElementById('modalDownloadBtn');
+const co=document.getElementById('cmpOriginal');
+const cc=document.getElementById('cmpCompressed');
+const cos=document.getElementById('origStat');
+const ccs=document.getElementById('compStat');
+const css=document.getElementById('saveStat');
+let lastBlob=null;let lastFile=null;
+
+function showModal(file,blob){
+lastBlob=blob;lastFile=file;
+mo.classList.add('show');
+co.src=URL.createObjectURL(file);
+cc.src=URL.createObjectURL(blob);
+cos.textContent=fmt(file.size);
+ccs.textContent=fmt(blob.size);
+css.textContent='-'+Math.round((1-blob.size/file.size)*100)+'%';
+// Init slider at 50%
+setTimeout(()=>{
+const o=document.getElementById('cmpOverlay');
+const h=document.getElementById('cmpHandle');
+if(o&&h){o.style.clipPath='inset(0 50% 0 0)';h.style.left='50%'}
+},50);
+}
+[mc,mcb].forEach(b=>b.addEventListener('click',()=>mo.classList.remove('show')));
+mo.addEventListener('click',e=>{if(e.target===mo)mo.classList.remove('show')});
+mdb.addEventListener('click',()=>{if(!lastBlob||!lastFile)return;const ext=fs.value;const name=lastFile.name.replace(/\.[^.]+$/,'')+'.'+ext;const url=URL.createObjectURL(lastBlob);const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();document.body.removeChild(a)});
+
+// Slider in modal
+const cw=document.getElementById('cmpWrap');
+let dragging=false;
+cw.addEventListener('mousedown',e=>{dragging=true;mS(e)});
+document.addEventListener('mousemove',e=>{if(dragging)mS(e)});
+document.addEventListener('mouseup',()=>{dragging=false});
+cw.addEventListener('touchstart',e=>{dragging=true;mS(e.touches[0])});
+document.addEventListener('touchmove',e=>{if(dragging)mS(e.touches[0])});
+document.addEventListener('touchend',()=>{dragging=false});
+function mS(e){
+const r=cw.getBoundingClientRect();let x=(e.clientX||0)-r.left;x=Math.max(0,Math.min(x,r.width));const p=(x/r.width)*100;
+document.getElementById('cmpOverlay').style.clipPath=`inset(0 ${100-p}% 0 0)`;document.getElementById('cmpHandle').style.left=`${p}%`;
+}
+
+// ===== Sticky / Download =====
+function updateSticky(){const r=compressed.size;sb.classList.toggle('show',r>0);rc.textContent=r}
+dl.addEventListener('click',async()=>{
+  const ext=fs.value;const L=I[lang];
+  if(compressed.size===1){
+    // Single file: direct download
+    const [idx,blob]=compressed.entries().next().value;
+    const n=files[idx].name.replace(/\.[^.]+$/,'')+'.'+ext;
+    const u=URL.createObjectURL(blob);const a=document.createElement('a');a.href=u;a.download=n;document.body.appendChild(a);a.click();document.body.removeChild(a);
+    return;
+  }
+  // Multiple files: ZIP download
+  toast(L==='zh'?'正在打包...':'Packaging...');
+  try{
+    const zips=[];
+    compressed.forEach((blob,idx)=>{
+      const n=files[idx].name.replace(/\.[^.]+$/,'')+'.'+ext;
+      zips.push(new File([blob],n));
     });
+    const zipResp=downloadZip(zips);
+    const zipBlob=await zipResp.blob();
+    const u=URL.createObjectURL(zipBlob);
+    const a=document.createElement('a');a.href=u;a.download='images.zip';document.body.appendChild(a);a.click();document.body.removeChild(a);
+    toast(L==='zh'?'下载完成':'Downloaded');
+  }catch(e){toast(L==='zh'?'打包失败':'Failed');console.error(e)}
+});
+so.addEventListener('click',resetAll);
+clBtn.addEventListener('click',resetAll);
+function resetAll(){
+files=[];compressed.clear();lastBlob=null;
+grid.innerHTML='';grid.classList.remove('show');cb.classList.remove('show');
+ctrl.classList.remove('show');pa.classList.remove('show');sb.classList.remove('show');
+qs.value=80;qv.textContent='80';
+toast(I[lang]==='zh'?'已重置':'Reset');
+}
 
-    // ===== Toast =====
-    function toast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2000); }
+function fmt(bytes){if(!bytes)return'0 B';const k=1024,s=['B','KB','MB'];const i=Math.floor(Math.log(bytes)/Math.log(k));return(bytes/Math.pow(k,i)).toFixed(i>0?1:0)+' '+s[i]}
 
-    // ===== FAQ =====
-    function toggleFaq(el) { el.classList.toggle('open'); const a = el.nextElementSibling; a.classList.toggle('visible'); }
-
-    // ===== Pro =====
-    function showPro() { toast('⭐ Pro version coming soon! Feature will be available in our next update.'); }
-
-    // ===== State =====
-    const state = { files: [], compressed: new Map(), processing: false };
-
-    const dz = document.getElementById('dropzone');
-    const fi = document.getElementById('fileInput');
-    const ub = document.getElementById('uploadBtn');
-    const grid = document.getElementById('imgGrid');
-    const bb = document.getElementById('batchBar');
-    const bc = document.getElementById('batchCount');
-    const bts = document.getElementById('batchTotalSize');
-    const ctrls = document.getElementById('controls');
-    const qs = document.getElementById('qualitySlider');
-    const qv = document.getElementById('qualityVal');
-    const of = document.getElementById('outputFmt');
-    const mw = document.getElementById('maxWidth');
-    const pw = document.getElementById('progressWrap');
-    const pf = document.getElementById('progressFill');
-    const pt = document.getElementById('progressText');
-    const dg = document.getElementById('downloadGroup');
-    const dzBtn = document.getElementById('downloadZipBtn');
-    const caBtn = document.getElementById('compressAllBtn');
-    const clBtn = document.getElementById('clearAllBtn');
-    const rsBtn = document.getElementById('resetAllBtn');
-
-    // Drag drop
-    dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('dragover'); });
-    dz.addEventListener('dragleave', () => dz.classList.remove('dragover'));
-    dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('dragover'); if (e.dataTransfer.files.length) addFiles([...e.dataTransfer.files]); });
-    ub.addEventListener('click', () => fi.click());
-    fi.addEventListener('change', e => { if (e.target.files.length) addFiles([...e.target.files]); fi.value = ''; });
-
-    qs.addEventListener('input', () => { qv.textContent = qs.value; });
-
-    function addFiles(newFiles) {
-        const valid = newFiles.filter(f => {
-            const t = f.type;
-            if (!['image/jpeg','image/png','image/webp'].includes(t)) { toast(`${f.name}: unsupported format`); return false; }
-            if (f.size > 20*1024*1024) { toast(`${f.name}: exceeds 20MB`); return false; }
-            return true;
-        });
-        if (!valid.length) return;
-
-        state.files = [...state.files, ...valid];
-        renderGrid();
-        ctrls.style.display = 'block';
+// ===== ZIP download library (from compressor.io) =====
+var downloadZip = (() => {
+  'stream' in Blob.prototype ||
+    Object.defineProperty(Blob.prototype, 'stream', {
+      value() {
+        return new Response(this).body
+      },
+    }),
+    'setBigUint64' in DataView.prototype ||
+      Object.defineProperty(DataView.prototype, 'setBigUint64', {
+        value(e, n, t) {
+          const i = Number(0xffffffffn & n),
+            o = Number(n >> 32n)
+          this.setUint32(e + (t ? 0 : 4), i, t), this.setUint32(e + (t ? 4 : 0), o, t)
+        },
+      })
+  var f = (e) => new DataView(new ArrayBuffer(e)),
+    r = (e) => new Uint8Array(e.buffer || e),
+    a = (e) => new TextEncoder().encode(String(e)),
+    s = (e) => Math.min(4294967295, Number(e)),
+    A = (e) => Math.min(65535, Number(e))
+  function u(e, n) {
+    if ((void 0 === n || n instanceof Date || (n = new Date(n)), e instanceof File)) return { isFile: 1, t: n || new Date(e.lastModified), i: e.stream() }
+    if (e instanceof Response) return { isFile: 1, t: n || new Date(e.headers.get('Last-Modified') || Date.now()), i: e.body }
+    if (void 0 === n) n = new Date()
+    else if (isNaN(n)) throw new Error('Invalid modification date.')
+    if (void 0 === e) return { isFile: 0, t: n }
+    if ('string' == typeof e) return { isFile: 1, t: n, i: a(e) }
+    if (e instanceof Blob) return { isFile: 1, t: n, i: e.stream() }
+    if (e instanceof Uint8Array || e instanceof ReadableStream) return { isFile: 1, t: n, i: e }
+    if (e instanceof ArrayBuffer || ArrayBuffer.isView(e)) return { isFile: 1, t: n, i: r(e) }
+    if (Symbol.asyncIterator in e) return { isFile: 1, t: n, i: d(e) }
+    throw new TypeError('Unsupported input format.')
+  }
+  function d(e) {
+    const n = 'next' in e ? e : e[Symbol.asyncIterator]()
+    return new ReadableStream({
+      async pull(e) {
+        let t = 0
+        for (; e.desiredSize > t; ) {
+          const i = await n.next()
+          if (!i.value) {
+            e.close()
+            break
+          }
+          {
+            const n = l(i.value)
+            e.enqueue(n), (t += n.byteLength)
+          }
+        }
+      },
+    })
+  }
+  function l(e) {
+    return 'string' == typeof e ? a(e) : e instanceof Uint8Array ? e : r(e)
+  }
+  function y(e, n, t) {
+    if ((void 0 === n || n instanceof Uint8Array || (n = a(n)), e instanceof File)) return { o: B(n || a(e.name)), A: BigInt(e.size) }
+    if (e instanceof Response) {
+      const i = e.headers.get('content-disposition'),
+        o = i && i.match(/;\s*filename\*?=["']?(.*?)["']?$/i),
+        f = (o && o[1]) || (e.url && new URL(e.url).pathname.split('/').findLast(Boolean)),
+        r = f && decodeURIComponent(f),
+        s = t || +e.headers.get('content-length')
+      return { o: B(n || a(r)), A: BigInt(s) }
     }
-
-    function removeFile(idx) {
-        state.files.splice(idx, 1);
-        state.compressed.delete(idx);
-        // reindex compressed
-        const newMap = new Map();
-        state.files.forEach((_, i) => {
-            const found = [...state.compressed.entries()].find(([k]) => k === i || (k >= idx));
-            // rebuilding map from stored data would be messy; simpler: recompress all
-        });
-        state.compressed.clear();
-        renderGrid();
-        updateDownloadGroup();
-        if (!state.files.length) { ctrls.style.display = 'none'; bb.classList.remove('show'); dg.style.display = 'none'; }
+    return (
+      (n = B(n, void 0 !== e || void 0 !== t)),
+      'string' == typeof e
+        ? { o: n, A: BigInt(a(e).length) }
+        : e instanceof Blob
+        ? { o: n, A: BigInt(e.size) }
+        : e instanceof ArrayBuffer || ArrayBuffer.isView(e)
+        ? { o: n, A: BigInt(e.byteLength) }
+        : { o: n, A: w(e, t) }
+    )
+  }
+  function w(e, n) {
+    return n > -1 ? BigInt(n) : e ? void 0 : 0n
+  }
+  function B(e, n = 1) {
+    if (!e || e.every((e) => 47 === e)) throw new Error('The file must have a name.')
+    if (n) for (; 47 === e[e.length - 1]; ) e = e.subarray(0, -1)
+    else 47 !== e[e.length - 1] && (e = new Uint8Array([...e, 47]))
+    return e
+  }
+  var b = new WebAssembly.Instance(
+      new WebAssembly.Module(
+        Uint8Array.from(
+          atob(
+            'AGFzbQEAAAABCgJgAABgAn9/AXwDAwIAAQUDAQACBwkCAW0CAAFjAAEIAQAKlQECSQEDfwNAIAEhAEEAIQIDQCAAQQF2IABBAXFBoIbi7X5scyEAIAJBAWoiAkEIRw0ACyABQQJ0IAA2AgAgAUEBaiIBQYACRw0ACwtJAQF/IAFBf3MhAUGAgAQhAkGAgAQgAGohAANAIAFB/wFxIAItAABzQQJ0KAIAIAFBCHZzIQEgAkEBaiICIABJDQALIAFBf3O4Cw'
+          ),
+          (e) => e.charCodeAt(0)
+        )
+      )
+    ),
+    { c, m } = b.exports,
+    I = 65536,
+    g = r(m).subarray(I)
+  function p(e, n = 0) {
+    for (const t of (function* (e) {
+      for (; e.length > I; ) yield e.subarray(0, I), (e = e.subarray(I))
+      e.length && (yield e)
+    })(e))
+      g.set(t), (n = c(t.length, n))
+    return n
+  }
+  function D(e, n, t = 0) {
+    const i = (e.getSeconds() >> 1) | (e.getMinutes() << 5) | (e.getHours() << 11),
+      o = e.getDate() | ((e.getMonth() + 1) << 5) | ((e.getFullYear() - 1980) << 9)
+    n.setUint16(t, i, 1), n.setUint16(t + 2, o, 1)
+  }
+  function v(e) {
+    const n = f(30)
+    return n.setUint32(0, 1347093252), n.setUint32(4, 754976768), D(e.t, n, 10), n.setUint16(26, e.o.length, 1), r(n)
+  }
+  async function* h(e) {
+    let { i: n } = e
+    if (('then' in n && (n = await n), n instanceof Uint8Array)) yield n, (e.u = p(n, 0)), (e.A = BigInt(n.length))
+    else {
+      e.A = 0n
+      const t = n.getReader()
+      for (;;) {
+        const { value: n, done: i } = await t.read()
+        if (i) break
+        ;(e.u = p(n, e.u)), (e.A += BigInt(n.length)), yield n
+      }
     }
-
-    function renderGrid() {
-        grid.innerHTML = '';
-        if (!state.files.length) { bb.classList.remove('show'); return; }
-
-        bb.classList.add('show');
-        bc.textContent = state.files.length;
-        bts.textContent = formatSize(state.files.reduce((s, f) => s + f.size, 0));
-
-        state.files.forEach((file, i) => {
-            const card = document.createElement('div');
-            card.className = 'img-card';
-            card.id = `img-${i}`;
-
-            const thumb = document.createElement('img');
-            thumb.className = 'thumb';
-            thumb.src = URL.createObjectURL(file);
-            card.appendChild(thumb);
-
-            const info = document.createElement('div');
-            info.className = 'info';
-            const nameDiv = document.createElement('div');
-            nameDiv.className = 'name';
-            nameDiv.textContent = file.name.length > 20 ? file.name.slice(0, 17) + '...' : file.name;
-            info.appendChild(nameDiv);
-
-            const sizes = document.createElement('div');
-            sizes.className = 'sizes';
-            const comp = state.compressed.get(i);
-            if (comp) {
-                sizes.innerHTML = `<span style="text-decoration:line-through;color:var(--error);">${formatSize(file.size)}</span> → <strong style="color:var(--success);">${formatSize(comp.size)}</strong> <span class="savings">(${Math.round((1 - comp.size / file.size) * 100)}%)</span>`;
-            } else {
-                sizes.textContent = formatSize(file.size);
-            }
-            info.appendChild(sizes);
-
-            const actions = document.createElement('div');
-            actions.style.cssText = 'margin-top:.375rem;display:flex;gap:.25rem;';
-            if (!state.compressed.has(i)) {
-                const compBtn = document.createElement('button');
-                compBtn.className = 'btn btn-success';
-                compBtn.style.cssText = 'padding:.25rem .5rem;font-size:.75rem;';
-                compBtn.textContent = 'Compress';
-                compBtn.onclick = () => compressSingle(i);
-                actions.appendChild(compBtn);
-            } else {
-                const dlBtn = document.createElement('button');
-                dlBtn.className = 'btn btn-primary';
-                dlBtn.style.cssText = 'padding:.25rem .5rem;font-size:.75rem;';
-                dlBtn.textContent = 'Download';
-                dlBtn.onclick = () => downloadSingle(i);
-                actions.appendChild(dlBtn);
-
-                if (comp && comp.size < file.size) {
-                    const sv = document.createElement('span');
-                    sv.style.cssText = `font-size:.7rem;color:var(--success);font-weight:600;margin-left:.375rem;`;
-                    sv.textContent = `-${Math.round((1 - comp.size / file.size) * 100)}%`;
-                    actions.appendChild(sv);
+  }
+  function F(e, n) {
+    const t = f(16 + (n ? 8 : 0))
+    return (
+      t.setUint32(0, 1347094280),
+      t.setUint32(4, e.isFile ? e.u : 0, 1),
+      n ? (t.setBigUint64(8, e.A, 1), t.setBigUint64(16, e.A, 1)) : (t.setUint32(8, s(e.A), 1), t.setUint32(12, s(e.A), 1)),
+      r(t)
+    )
+  }
+  function Q(e, n, t = 0) {
+    const i = f(46)
+    return (
+      i.setUint32(0, 1347092738),
+      i.setUint32(4, 755182848),
+      i.setUint16(8, 2048),
+      D(e.t, i, 12),
+      i.setUint32(16, e.isFile ? e.u : 0, 1),
+      i.setUint32(20, s(e.A), 1),
+      i.setUint32(24, s(e.A), 1),
+      i.setUint16(28, e.o.length, 1),
+      i.setUint16(30, t, 1),
+      i.setUint16(40, e.isFile ? 33204 : 16893, 1),
+      i.setUint32(42, s(n), 1),
+      r(i)
+    )
+  }
+  function E(e, n, t) {
+    const i = f(t)
+    return i.setUint16(0, 1, 1), i.setUint16(2, t - 4, 1), 16 & t && (i.setBigUint64(4, e.A, 1), i.setBigUint64(12, e.A, 1)), i.setBigUint64(t - 8, n, 1), r(i)
+  }
+  function C(e) {
+    return e instanceof File || e instanceof Response
+      ? [[e], [e]]
+      : [
+          [e.input, e.name, e.size],
+          [e.input, e.lastModified],
+        ]
+  }
+  var N = (e) =>
+    (function (e) {
+      let n = BigInt(22),
+        t = 0n,
+        i = 0
+      for (const o of e) {
+        if (!o.o) throw new Error('Every file must have a non-empty name.')
+        if (void 0 === o.A) throw new Error(`Missing size for file "${new TextDecoder().decode(o.o)}".`)
+        const e = o.A >= 0xffffffffn,
+          f = t >= 0xffffffffn
+        ;(t += BigInt(46 + o.o.length + (e && 8)) + o.A), (n += BigInt(o.o.length + 46 + ((12 * f) | (28 * e)))), i || (i = e)
+      }
+      return (i || t >= 0xffffffffn) && (n += BigInt(76)), n + t
+    })(
+      (function* (e) {
+        for (const n of e) yield y(...C(n)[0])
+      })(e)
+    )
+  return function (e, n = {}) {
+    const t = { 'Content-Type': 'application/zip', 'Content-Disposition': 'attachment' }
+    return (
+      ('bigint' == typeof n.length || Number.isInteger(n.length)) && n.length > 0 && (t['Content-Length'] = String(n.length)),
+      n.metadata && (t['Content-Length'] = String(N(n.metadata))),
+      new Response(
+        (function (e) {
+          return d(
+            (async function* (e) {
+              const n = []
+              let t = 0n,
+                i = 0n,
+                o = 0
+              for await (const f of e) {
+                yield v(f), yield f.o, f.isFile && (yield* h(f))
+                const e = f.A >= 0xffffffffn,
+                  r = (12 * (t >= 0xffffffffn)) | (28 * e)
+                yield F(f, e), n.push(Q(f, t, r)), n.push(f.o), r && n.push(E(f, t, r)), e && (t += 8n), i++, (t += BigInt(46 + f.o.length) + f.A), o || (o = e)
+              }
+              let a = 0n
+              for (const e of n) yield e, (a += BigInt(e.length))
+              if (o || t >= 0xffffffffn) {
+                const e = f(76)
+                e.setUint32(0, 1347094022),
+                  e.setBigUint64(4, BigInt(44), 1),
+                  e.setUint32(12, 755182848),
+                  e.setBigUint64(24, i, 1),
+                  e.setBigUint64(32, i, 1),
+                  e.setBigUint64(40, a, 1),
+                  e.setBigUint64(48, t, 1),
+                  e.setUint32(56, 1347094023),
+                  e.setBigUint64(64, t + a, 1),
+                  e.setUint32(72, 1, 1),
+                  yield r(e)
+              }
+              const u = f(22)
+              u.setUint32(0, 1347093766), u.setUint16(8, A(i), 1), u.setUint16(10, A(i), 1), u.setUint32(12, s(a), 1), u.setUint32(16, s(t), 1), yield r(u)
+            })(
+              (async function* (e) {
+                for await (const n of e) {
+                  const [e, t] = C(n)
+                  yield Object.assign(u(...t), y(...e))
                 }
-            }
-            info.appendChild(actions);
+              })(e)
+            )
+          )
+        })(e),
+        { headers: t }
+      )
+    )
+  }
+})();
 
-            card.appendChild(info);
+// Events
+fs.addEventListener('change',()=>{if(files.length===1)compressSingle()});
+ws.addEventListener('change',()=>{if(files.length===1)compressSingle()});
 
-            const rm = document.createElement('button');
-            rm.className = 'remove-btn';
-            rm.textContent = '×';
-            rm.onclick = () => removeFile(i);
-            card.appendChild(rm);
+// ===== Showcase comparison slider =====
+const shState={losslessBlob:null,highBlob:null};
+function initShowcase(){
+  const o=document.getElementById('shOrig');
+  const l=document.getElementById('shCompLossless');
+  const h=document.getElementById('shCompHigh');
+  if(!o||!l||!h)return;
+  // Always set original image first
+  o.src='./peterdargatz-indian-peafowl-50515_1280.jpg';
+  // Try fetch-based approach (works on HTTP; may fail on file://)
+  fetch('./peterdargatz-indian-peafowl-50515_1280.jpg').then(r=>r.blob()).then(blob=>{
+    const url=URL.createObjectURL(blob);
+    const img=new Image();
+    img.onload=()=>{
+      try{
+        const c=document.createElement('canvas');
+        c.width=img.naturalWidth;c.height=img.naturalHeight;
+        c.getContext('2d').drawImage(img,0,0);
+        c.toBlob(b=>{
+          if(b){shState.losslessBlob=b;l.src=URL.createObjectURL(b)}
+          else l.src=o.src;
+          c.toBlob(b2=>{
+            if(b2){shState.highBlob=b2;h.src=URL.createObjectURL(b2)}
+            else h.src=o.src;
+            setupShowcaseSlider();applySliderSH(50);
+          },'image/jpeg',.35);
+        },'image/jpeg',.92);
+      }catch(e){
+        l.src=o.src;h.src=o.src;
+        setupShowcaseSlider();applySliderSH(50);
+      }
+    };
+    img.onerror=()=>{l.src=o.src;h.src=o.src;setupShowcaseSlider();applySliderSH(50)};
+    img.src=url;
+  }).catch(()=>{
+    // fetch failed (file:// protocol) — use original for all
+    l.src=o.src;h.src=o.src;
+    setupShowcaseSlider();applySliderSH(50);
+  });
+}
+function updateShowcaseSizes(blob){
+  // Safe: elements may not exist
+  const bv=document.getElementById('shBeforeVal');
+  const av=document.getElementById('shAfterVal');
+  const sv=document.getElementById('shSave');
+  if(bv)bv.textContent=fmt(shState.losslessBlob.size);
+  if(av&&blob)av.textContent=fmt(blob.size);
+  if(sv&&blob)sv.textContent='-'+Math.round((1-blob.size/shState.losslessBlob.size)*100)+'%';
+}
+let _sh={};
+function setupShowcaseSlider(){
+  _sh={wrap:document.getElementById('shCmpWrap'),overlay:document.getElementById('shOverlay'),line:document.getElementById('shLine'),knob:document.getElementById('shKnob'),drag:false};
+  if(!_sh.wrap)return;
+  function move(e){
+    if(!_sh.drag)return;
+    const r=_sh.wrap.getBoundingClientRect();
+    let x=(e.clientX||0)-r.left;x=Math.max(0,Math.min(x,r.width));
+    const p=(x/r.width)*100;
+    _sh.overlay.style.clipPath='inset(0 '+(100-p)+'% 0 0)';
+    _sh.line.style.left=p+'%';
+    _sh.knob.style.left=p+'%';
+  }
+  _sh.wrap.addEventListener('mousedown',e=>{_sh.drag=true;move(e)});
+  document.addEventListener('mousemove',move);
+  document.addEventListener('mouseup',()=>{_sh.drag=false});
+  _sh.wrap.addEventListener('touchstart',e=>{_sh.drag=true;move(e.touches[0])});
+  document.addEventListener('touchmove',e=>{if(_sh.drag)move(e.touches[0])});
+  document.addEventListener('touchend',()=>{_sh.drag=false});
+}
+function applySliderSH(p){
+  if(!_sh.overlay)return;
+  _sh.overlay.style.clipPath='inset(0 '+(100-p)+'% 0 0)';
+  _sh.line.style.left=p+'%';
+  _sh.knob.style.left=p+'%';
+}
+initShowcase();
 
-            grid.appendChild(card);
-        });
-    }
-
-    // ===== Compression =====
-    function compressSingle(idx) {
-        if (state.processing) return;
-        const file = state.files[idx];
-        if (!file) return;
-
-        const q = parseInt(qs.value) / 100;
-        const fmt = of.value;
-        const maxW = parseInt(mw.value);
-        const mimeMap = { jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp' };
-
-        const img = new Image();
-        img.onload = () => {
-            const canvas = document.createElement('canvas');
-            let w = img.width, h = img.height;
-            if (maxW > 0 && w > maxW) { h = Math.round((maxW / w) * h); w = maxW; }
-            canvas.width = w; canvas.height = h;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, w, h);
-            canvas.toBlob(blob => {
-                state.compressed.set(idx, blob);
-                renderGrid();
-                updateDownloadGroup();
-            }, mimeMap[fmt] || 'image/jpeg', q);
-        };
-        img.src = URL.createObjectURL(file);
-    }
-
-    function compressAll() {
-        if (state.processing) return;
-        const uncompressed = state.files.map((f, i) => i).filter(i => !state.compressed.has(i));
-        if (!uncompressed.length) { toast('All images already compressed'); return; }
-
-        state.processing = true;
-        caBtn.disabled = true;
-        pw.classList.add('show');
-        pf.style.width = '0%';
-
-        const total = uncompressed.length;
-        let done = 0;
-
-        function next() {
-            if (done >= total) {
-                state.processing = false;
-                caBtn.disabled = false;
-                pt.textContent = '✅ All images compressed!';
-                updateDownloadGroup();
-                return;
-            }
-            const idx = uncompressed[done];
-            pt.textContent = `Compressing ${done + 1} of ${total}: ${state.files[idx].name}`;
-
-            const file = state.files[idx];
-            const q = parseInt(qs.value) / 100;
-            const fmt = of.value;
-            const maxW = parseInt(mw.value);
-            const mimeMap = { jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp' };
-
-            const img = new Image();
-            img.onload = () => {
-                const canvas = document.createElement('canvas');
-                let w = img.width, h = img.height;
-                if (maxW > 0 && w > maxW) { h = Math.round((maxW / w) * h); w = maxW; }
-                canvas.width = w; canvas.height = h;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0, w, h);
-                canvas.toBlob(blob => {
-                    state.compressed.set(idx, blob);
-                    done++;
-                    pf.style.width = `${(done / total) * 100}%`;
-                    renderGrid();
-                    next();
-                }, mimeMap[fmt] || 'image/jpeg', q);
-            };
-            img.src = URL.createObjectURL(file);
-        }
-        next();
-    }
-
-    function updateDownloadGroup() {
-        const count = state.compressed.size;
-        if (count > 0) {
-            dg.style.display = '';
-            dzBtn.textContent = count === 1 ? '⬇️ Download Image' : `📦 Download All as ZIP (${count} files)`;
-        } else {
-            dg.style.display = 'none';
-        }
-    }
-
-    // ===== Download =====
-    function downloadSingle(idx) {
-        const blob = state.compressed.get(idx);
-        if (!blob) return;
-        const file = state.files[idx];
-        const ext = of.value;
-        const name = file.name.replace(/\.[^.]+$/, '') + '_compressed.' + ext;
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url; a.download = name;
-        document.body.appendChild(a); a.click(); document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        toast('Download started!');
-    }
-
-    function downloadZip() {
-        const entries = [...state.compressed.entries()];
-        if (!entries.length) return;
-
-        if (entries.length === 1) {
-            downloadSingle(entries[0][0]);
-            return;
-        }
-
-        // Simple ZIP implementation using JSZip-like approach
-        // Since we can't load JSZip, we'll download individually with a prompt
-        toast('Batch ZIP download available in Pro version. Downloading one by one...');
-        entries.forEach(([idx]) => downloadSingle(idx));
-    }
-
-    // ===== Events =====
-    caBtn.addEventListener('click', compressAll);
-    dzBtn.addEventListener('click', downloadZip);
-
-    clBtn.addEventListener('click', () => {
-        state.files = []; state.compressed.clear();
-        grid.innerHTML = ''; bb.classList.remove('show');
-        ctrls.style.display = 'none'; dg.style.display = 'none';
-        pw.classList.remove('show');
-    });
-
-    rsBtn.addEventListener('click', () => {
-        state.files = []; state.compressed.clear();
-        grid.innerHTML = ''; bb.classList.remove('show');
-        ctrls.style.display = 'none'; dg.style.display = 'none';
-        pw.classList.remove('show');
-        qs.value = 80; qv.textContent = '80';
-        toast('Reset complete');
-    });
-
-    function formatSize(bytes) {
-        if (!bytes) return '0 B';
-        const k = 1024; const sizes = ['B','KB','MB'];
-        const i = Math.floor(Math.log(bytes) / Math.log(k));
-        const v = bytes / Math.pow(k, i);
-        return v.toFixed(i > 0 ? 1 : 0) + ' ' + sizes[i];
-    }
-
-    // ===== SEO Schema =====
-    const ld = { "@context":"https://schema.org", "@type":"WebApplication", "name":"QuickImgCompress - Free Online Image Compressor", "description":"Compress and resize JPEG, PNG, WebP images online. Batch processing, 100% browser-based.", "applicationCategory":"Multimedia", "operatingSystem":"All", "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"} };
-    const s = document.createElement('script'); s.type = 'application/ld+json'; s.textContent = JSON.stringify(ld); document.head.appendChild(s);
-
-    const fl = { "@context":"https://schema.org", "@type":"FAQPage", "mainEntity": [
-        {"@type":"Question","name":"Is this image compressor free?","acceptedAnswer":{"@type":"Answer","text":"Yes, completely free."}},
-        {"@type":"Question","name":"Are my images uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. All processing is in your browser."}},
-        {"@type":"Question","name":"Can I compress multiple images at once?","acceptedAnswer":{"@type":"Answer","text":"Yes, batch processing is supported."}}
-    ]};
-    const fs = document.createElement('script'); fs.type = 'application/ld+json'; fs.textContent = JSON.stringify(fl); document.head.appendChild(fs);
-
-    console.log('🚀 QuickImgCompress loaded');
+console.log('QuickImgCompress v4 loaded');
 </script>
 </body>
 </html>
