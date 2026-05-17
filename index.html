@@ -71,17 +71,6 @@ nav{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-inde
 .img-card .fsize{font-size:11px;color:#94a3b8}
 .img-card .del{position:absolute;top:4px;right:4px;width:20px;height:20px;border-radius:50%;border:none;background:rgba(0,0,0,.4);color:#fff;cursor:pointer;font-size:12px;line-height:0}
 
-/* ===== Controls ===== */
-.ctrl-box{display:none;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:20px 24px;margin-bottom:20px}
-.ctrl-box.show{display:block}
-.ctrl-row{display:flex;flex-wrap:wrap;gap:16px}
-.ctrl-g{flex:1;min-width:130px}
-.ctrl-g label{display:block;font-size:13px;font-weight:600;color:#64748b;margin-bottom:4px}
-.ctrl-g label .val{color:#2563eb;font-size:15px;font-weight:700}
-input[type="range"]{width:100%;height:5px;-webkit-appearance:none;background:#e2e8f0;border-radius:3px;outline:none}
-input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#2563eb;cursor:pointer;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.15)}
-select{padding:7px 10px;border:1px solid #e2e8f0;border-radius:8px;background:#fff;font-size:14px;width:100%;color:#1e293b;cursor:pointer}
-
 /* ===== Progress ===== */
 .progress{display:none;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:14px 20px;margin-bottom:20px}
 .progress.show{display:block}
@@ -138,6 +127,19 @@ select{padding:7px 10px;border:1px solid #e2e8f0;border-radius:8px;background:#f
 /* ===== Footer ===== */
 footer{text-align:center;padding:20px;color:#94a3b8;font-size:13px}
 
+/* Modal controls */
+.mc-wrap{padding:16px 0 4px}
+.mc-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.mc-g{flex:1;min-width:120px}
+.mc-g label{display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:2px}
+.mc-g label .val{color:#2563eb;font-size:14px;font-weight:700}
+.mc-g input[type="range"]{width:100%;height:5px;-webkit-appearance:none;background:#e2e8f0;border-radius:3px;outline:none}
+.mc-g input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#2563eb;cursor:pointer;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.15)}
+.mc-g select{padding:6px 8px;border:1px solid #e2e8f0;border-radius:8px;background:#fff;font-size:13px;width:100%;color:#1e293b;cursor:pointer}
+body.dark .mc-g label{color:#94a3b8}
+body.dark .mc-g select{background:#0f172a;color:#e2e8f0;border-color:#334155}
+body.dark .mc-g input[type="range"]{background:#334155}
+
 /* ===== Animation Keyframes ===== */
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
@@ -184,7 +186,7 @@ body.dark .nav-link:hover{background:#334155;color:#e2e8f0}
 body.dark .nav-link.active{background:#1e3a5f;color:#60a5fa}
 body.dark .nav-icon-btn{background:transparent;border-color:#334155;color:#94a3b8}
 body.dark .page-home .sub{color:#94a3b8}
-body.dark .dz-wrap,.dark .count-bar,.dark .ctrl-box,.dark .progress,.dark .modal-content{background:#1e293b;border-color:#334155}
+body.dark .dz-wrap,.dark .count-bar,.dark .progress,.dark .modal-content{background:#1e293b;border-color:#334155}
 body.dark .dz-wrap:hover{background:#1e3a5f}
 body.dark .img-card{background:#1e293b;border-color:#334155}
 body.dark select{background:#0f172a;color:#e2e8f0;border-color:#334155}
@@ -279,15 +281,6 @@ QuickImgCompress
 <!-- Image Grid -->
 <div class="img-grid" id="imgGrid"></div>
 
-<!-- Controls -->
-<div class="ctrl-box" id="ctrlBox">
-<div class="ctrl-row">
-<div class="ctrl-g"><label data-i="qualityLabel">质量: <span class="val" id="qualityVal">80</span>%</label><input type="range" id="qualitySlider" min="1" max="100" value="80"></div>
-<div class="ctrl-g"><label data-i="formatLabel">输出格式</label><select id="formatSelect"><option value="jpeg">JPEG</option><option value="png">PNG</option><option value="webp">WebP</option></select></div>
-<div class="ctrl-g"><label data-i="widthLabel">最大宽度</label><select id="widthSelect"><option value="0" data-i="origWidth">原始</option><option value="1920">1920px</option><option value="1280">1280px</option><option value="800">800px</option></select></div>
-</div>
-</div>
-
 <!-- Progress -->
 <div class="progress" id="progressArea">
 <div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
@@ -361,6 +354,22 @@ QuickImgCompress
 <div class="modal-stats">
 <div class="modal-stat"><div class="label" data-i="originalSize">原始大小</div><div class="value orig" id="origStat">-</div></div>
 <div class="modal-stat"><div class="label" data-i="compressedSize">压缩后</div><div class="value comp" id="compStat">-</div><div class="save" id="saveStat">-</div></div>
+</div>
+<div class="mc-wrap">
+<div class="mc-row">
+<div class="mc-g" style="flex:2;min-width:160px">
+<label><span data-i="qualityLabel">质量</span>: <span class="val" id="modalQVal">80</span>%</label>
+<input type="range" id="modalQSlider" min="5" max="95" value="80">
+</div>
+<div class="mc-g">
+<label data-i="formatLabel">格式</label>
+<select id="modalFmt"><option value="jpeg">JPEG</option><option value="png">PNG</option><option value="webp">WebP</option></select>
+</div>
+<div class="mc-g">
+<label data-i="widthLabel">最大宽度</label>
+<select id="modalW"><option value="0" data-i="origWidth">原始</option><option value="1920">1920px</option><option value="1280">1280px</option><option value="800">800px</option></select>
+</div>
+</div>
 </div>
 <div class="modal-actions">
 <button class="btn btn-outline" id="modalCloseBtn" data-i="modalClose">关闭</button>
@@ -449,11 +458,6 @@ const fi=document.getElementById('fileInput');
 const grid=document.getElementById('imgGrid');
 const cb=document.getElementById('countBar');
 const cn=document.getElementById('countNum');
-const ctrl=document.getElementById('ctrlBox');
-const qs=document.getElementById('qualitySlider');
-const qv=document.getElementById('qualityVal');
-const fs=document.getElementById('formatSelect');
-const ws=document.getElementById('widthSelect');
 const pa=document.getElementById('progressArea');
 const pf=document.getElementById('progFill');
 const pt=document.getElementById('progText');
@@ -470,18 +474,13 @@ dz.addEventListener('dragleave',()=>dz.classList.remove('dragover'));
 dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('dragover');if(e.dataTransfer.files.length)addFiles([...e.dataTransfer.files])});
 document.getElementById('uploadBtn').addEventListener('click',()=>fi.click());
 fi.addEventListener('change',e=>{if(e.target.files.length)addFiles([...e.target.files]);fi.value=''});
-qs.addEventListener('input',()=>{qv.textContent=qs.value;if(files.length===1)debounceCompress()});
-
-let dt;
-function debounceCompress(){clearTimeout(dt);dt=setTimeout(compressSingle,300)}
 
 function addFiles(fl){
 const v=fl.filter(f=>{const t=f.type;if(!['image/jpeg','image/png','image/webp'].includes(t))return false;if(f.size>20*1024*1024)return false;return true});
 if(!v.length)return;
 files=[...files,...v];
 renderGrid();
-ctrl.classList.add('show');
-if(files.length===1&&compressed.size===0)compressSingle();
+if(files.length===1)compressSingle();
 }
 
 function renderGrid(){
@@ -496,9 +495,11 @@ const n=document.createElement('div');n.className='fname';n.textContent=f.name.l
 const sz=document.createElement('div');sz.className='fsize';
 const cp=compressed.get(i);
 if(cp){
+c.style.cursor='pointer';c.title='点击查看对比';
 const sv=Math.round((1-cp.size/f.size)*100);
 sz.innerHTML=`<span style="text-decoration:line-through;color:#ef4444">${fmt(f.size)}</span> → <span style="color:#10b981;font-weight:600">${fmt(cp.size)}</span>`;
 const sv2=document.createElement('div');sv2.style.cssText='font-size:11px;color:#10b981;font-weight:600';sv2.textContent=`-${sv}%`;c.appendChild(sv2);
+c.addEventListener('click',()=>showModal(f,cp));
 }else{sz.textContent=fmt(f.size)}
 c.appendChild(sz);
 const d=document.createElement('button');d.className='del';d.textContent='×';d.onclick=()=>{files.splice(i,1);compressed.delete(i);renderGrid();if(!files.length)resetAll()};c.appendChild(d);
@@ -510,14 +511,12 @@ updateSticky();
 // ===== Compress Single =====
 function compressSingle(){
 if(!files.length||files.length>1)return;
-const f=files[0];const q=parseInt(qs.value)/100;const fmt=fs.value;const mw=parseInt(ws.value);
-const m={jpeg:'image/jpeg',png:'image/png',webp:'image/webp'};
+const f=files[0];
 const img=new Image();
 img.onload=()=>{
 const c=document.createElement('canvas');let w=img.width,h=img.height;
-if(mw>0&&w>mw){h=Math.round((mw/w)*h);w=mw}
 c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);
-c.toBlob(blob=>{compressed.set(0,blob);renderGrid();showModal(f,blob)},m[fmt]||'image/jpeg',q);
+c.toBlob(blob=>{compressed.set(0,blob);renderGrid();showModal(f,blob)},'image/jpeg',.8);
 };
 img.src=URL.createObjectURL(f);
 }
@@ -530,17 +529,16 @@ if(!idxs.length)return;
 processing=true;cpBtn.disabled=true;
 pa.classList.add('show');pf.style.width='0';
 let done=0;const total=idxs.length;
-const L=I[lang];const q=parseInt(qs.value)/100;const fmt=fs.value;const mw=parseInt(ws.value);
-const m={jpeg:'image/jpeg',png:'image/png',webp:'image/webp'};
+const L=I[lang];const m={jpeg:'image/jpeg',png:'image/png',webp:'image/webp'};
 function next(){
 if(done>=total){processing=false;cpBtn.disabled=false;pt.textContent='✅ '+(L==='zh'?'压缩完成':'Complete');pf.style.width='100%';updateSticky();return;}
 const idx=idxs[done];pt.textContent=(L==='zh'?`处理中 ${done+1}/${total}`:`Processing ${done+1}/${total}`)+': '+files[idx].name;
 const img=new Image();
 img.onload=()=>{
 const c=document.createElement('canvas');let w=img.width,h=img.height;
-if(mw>0&&w>mw){h=Math.round((mw/w)*h);w=mw}
+// Batch: default width (original)
 c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);
-c.toBlob(blob=>{compressed.set(idx,blob);done++;pf.style.width=`${(done/total)*100}%`;renderGrid();next()},m[fmt]||'image/jpeg',q);
+c.toBlob(blob=>{compressed.set(idx,blob);done++;pf.style.width=`${(done/total)*100}%`;renderGrid();next()},'image/jpeg',.8);
 };
 img.src=URL.createObjectURL(files[idx]);
 }
@@ -557,14 +555,41 @@ const cc=document.getElementById('cmpCompressed');
 const cos=document.getElementById('origStat');
 const ccs=document.getElementById('compStat');
 const css=document.getElementById('saveStat');
-let lastBlob=null;let lastFile=null;let modalCanvas=null;let modalQ=80;
+let lastBlob=null;let lastFile=null;let modalCanvas=null;
+const mQS=document.getElementById('modalQSlider');
+const mQF=document.getElementById('modalFmt');
+const mQW=document.getElementById('modalW');
+const mQV=document.getElementById('modalQVal');
+
+// Re-compress from original canvas using current modal controls
+function recompress(cb){
+  if(!modalCanvas||!lastFile)return;
+  const q=parseInt(mQS.value)/100;
+  const mm={'jpeg':'image/jpeg','png':'image/png','webp':'image/webp'};
+  const ftm=mm[mQF.value]||'image/jpeg';
+  const mw=parseInt(mQW.value);
+  const c=document.createElement('canvas');let w=modalCanvas.width,h=modalCanvas.height;
+  if(mw>0&&w>mw){h=Math.round((mw/w)*h);w=mw}
+  c.width=w;c.height=h;c.getContext('2d').drawImage(modalCanvas,0,0,w,h);
+  c.toBlob(b=>{
+    if(!b)return;
+    lastBlob=b;
+    document.getElementById('cmpCompressed').src=URL.createObjectURL(b);
+    document.getElementById('compStat').textContent=fmt(b.size);
+    const sp=Math.round((1-b.size/lastFile.size)*100);
+    document.getElementById('saveStat').textContent='-'+sp+'%';
+    if(cb)cb(b);
+  },ftm,q);
+}
 
 function showModal(file,blob){
 lastBlob=blob;lastFile=file;modalCanvas=null;
+// Reset modal controls
+mQS.value=80;mQV.textContent='80';mQF.value='jpeg';mQW.value='0';
 mo.classList.add('show');
 co.src=URL.createObjectURL(file);
 cc.src=URL.createObjectURL(blob);
-// Load original image onto a hidden canvas for on-demand re-compression
+// Load original image onto hidden canvas for re-compression
 const mImg=new Image();
 mImg.onload=()=>{
   const c=document.createElement('canvas');
@@ -598,9 +623,14 @@ if(o&&h){o.style.clipPath='inset(0 50% 0 0)';h.style.left='50%'}
 }
 [mc,mcb].forEach(b=>b.addEventListener('click',()=>mo.classList.remove('show')));
 mo.addEventListener('click',e=>{if(e.target===mo)mo.classList.remove('show')});
-mdb.addEventListener('click',()=>{if(!lastBlob||!lastFile)return;const ext=fs.value;const name=lastFile.name.replace(/\.[^.]+$/,'')+'.'+ext;const url=URL.createObjectURL(lastBlob);const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();document.body.removeChild(a)});
+mdb.addEventListener('click',()=>{if(!lastBlob||!lastFile)return;const ext=mQF.value;const name=lastFile.name.replace(/\.[^.]+$/,'')+'.'+ext;const url=URL.createObjectURL(lastBlob);const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();document.body.removeChild(a)});
 
-// Slider in modal
+// Modal controls → recompress
+mQS.addEventListener('input',()=>{mQV.textContent=mQS.value;recompress()});
+mQF.addEventListener('change',recompress);
+mQW.addEventListener('change',recompress);
+
+// Comparison slider (visual only — no compression change)
 const cw=document.getElementById('cmpWrap');
 let dragging=false;
 cw.addEventListener('mousedown',e=>{dragging=true;mS(e)});
@@ -613,29 +643,13 @@ function mS(e){
 const r=cw.getBoundingClientRect();let x=(e.clientX||0)-r.left;x=Math.max(0,Math.min(x,r.width));const p=(x/r.width)*100;
 document.getElementById('cmpOverlay').style.clipPath=`inset(0 ${100-p}% 0 0)`;document.getElementById('cmpHandle').style.left=`${p}%`;
 const qb=document.getElementById('cmpQuality');
-// Re-compress in real time: slider position = quality level
-// p=0 (showing original) → quality 95, p=100 (showing compressed) → quality 5
-if(!modalCanvas||!lastFile){if(qb)qb.textContent='Q:'+(Math.round(5+(p/100)*90))+'%';return;}
-const q=Math.round(5+(p/100)*90); // 5–95
-if(qb)qb.textContent='Q:'+q+'%';
-if(q===modalQ)return;modalQ=q;
-const m={'jpeg':'image/jpeg','png':'image/png','webp':'image/webp'};
-const fmtMime=m[fs.value]||'image/jpeg';
-// Use requestIdleCallback or rAF for smoothness
-modalCanvas.toBlob(b=>{
-  if(!b)return;
-  lastBlob=b;
-  document.getElementById('cmpCompressed').src=URL.createObjectURL(b);
-  document.getElementById('compStat').textContent=fmt(b.size);
-  const sp=Math.round((1-b.size/lastFile.size)*100);
-  document.getElementById('saveStat').textContent='-'+sp+'%';
-},fmtMime,q/100);
+if(qb)qb.textContent='Q:'+(Math.round(5+(p/100)*90))+'%';
 }
 
 // ===== Sticky / Download =====
 function updateSticky(){const r=compressed.size;sb.classList.toggle('show',r>0);rc.textContent=r}
 dl.addEventListener('click',async()=>{
-  const ext=fs.value;const L=I[lang];
+  const ext='jpeg';const L=I[lang];
   if(compressed.size===1){
     // Single file: direct download
     const [idx,blob]=compressed.entries().next().value;
@@ -663,8 +677,7 @@ clBtn.addEventListener('click',resetAll);
 function resetAll(){
 files=[];compressed.clear();lastBlob=null;
 grid.innerHTML='';grid.classList.remove('show');cb.classList.remove('show');
-ctrl.classList.remove('show');pa.classList.remove('show');sb.classList.remove('show');
-qs.value=80;qv.textContent='80';
+pa.classList.remove('show');sb.classList.remove('show');
 toast(I[lang]==='zh'?'已重置':'Reset');
 }
 
@@ -908,9 +921,6 @@ var downloadZip = (() => {
   }
 })();
 
-// Events
-fs.addEventListener('change',()=>{if(files.length===1)compressSingle()});
-ws.addEventListener('change',()=>{if(files.length===1)compressSingle()});
 
 // ===== Showcase comparison slider =====
 const shState={losslessBlob:null,highBlob:null};
