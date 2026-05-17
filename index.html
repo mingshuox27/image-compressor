@@ -101,7 +101,6 @@ nav{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-inde
 .cmp-tag{position:absolute;bottom:12px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:5px;z-index:4;pointer-events:none;letter-spacing:.5px}
 .cmp-tag-l{left:12px;background:rgba(37,99,235,.85);color:#fff}
 .cmp-tag-r{right:12px;background:rgba(16,185,129,.85);color:#fff}
-.cmp-tag-c{left:50%;transform:translateX(-50%);bottom:12px;background:rgba(0,0,0,.6);color:#fff;font-size:10px;padding:3px 8px}
 .modal-stats{display:flex;gap:32px;justify-content:center;margin-top:18px;text-align:center}
 .modal-stat .label{font-size:12px;color:#94a3b8;margin-bottom:2px}
 .modal-stat .value{font-size:20px;font-weight:700}
@@ -349,7 +348,6 @@ QuickImgCompress
 <div class="cmp-handle" id="cmpHandle"></div>
 <div class="cmp-tag cmp-tag-l" data-i="cmpOrig">原图</div>
 <div class="cmp-tag cmp-tag-r" data-i="cmpComp">压缩后</div>
-<div class="cmp-tag cmp-tag-c" id="cmpQuality">Q:80%</div>
 </div>
 <div class="modal-stats">
 <div class="modal-stat"><div class="label" data-i="originalSize">原始大小</div><div class="value orig" id="origStat">-</div></div>
@@ -478,9 +476,10 @@ fi.addEventListener('change',e=>{if(e.target.files.length)addFiles([...e.target.
 function addFiles(fl){
 const v=fl.filter(f=>{const t=f.type;if(!['image/jpeg','image/png','image/webp'].includes(t))return false;if(f.size>20*1024*1024)return false;return true});
 if(!v.length)return;
+const start=files.length;
 files=[...files,...v];
 renderGrid();
-if(files.length===1)compressSingle();
+if(v.length===1)compressSingle(start);
 }
 
 function renderGrid(){
@@ -502,21 +501,21 @@ const sv2=document.createElement('div');sv2.style.cssText='font-size:11px;color:
 c.addEventListener('click',()=>showModal(f,cp));
 }else{sz.textContent=fmt(f.size)}
 c.appendChild(sz);
-const d=document.createElement('button');d.className='del';d.textContent='×';d.onclick=()=>{files.splice(i,1);compressed.delete(i);renderGrid();if(!files.length)resetAll()};c.appendChild(d);
+const d=document.createElement('button');d.className='del';d.textContent='×';d.onclick=e=>{e.stopPropagation();files.splice(i,1);compressed.delete(i);renderGrid();if(!files.length)resetAll()};c.appendChild(d);
 grid.appendChild(c);
 });
 updateSticky();
 }
 
 // ===== Compress Single =====
-function compressSingle(){
-if(!files.length||files.length>1)return;
-const f=files[0];
+function compressSingle(idx){
+if(idx===undefined&&files.length>0)idx=files.length-1;
+const f=files[idx];if(!f)return;
 const img=new Image();
 img.onload=()=>{
 const c=document.createElement('canvas');let w=img.width,h=img.height;
 c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);
-c.toBlob(blob=>{compressed.set(0,blob);renderGrid();showModal(f,blob)},'image/jpeg',.8);
+c.toBlob(blob=>{compressed.set(idx,blob);renderGrid();showModal(f,blob)},'image/jpeg',.8);
 };
 img.src=URL.createObjectURL(f);
 }
@@ -642,8 +641,6 @@ document.addEventListener('touchend',()=>{dragging=false});
 function mS(e){
 const r=cw.getBoundingClientRect();let x=(e.clientX||0)-r.left;x=Math.max(0,Math.min(x,r.width));const p=(x/r.width)*100;
 document.getElementById('cmpOverlay').style.clipPath=`inset(0 ${100-p}% 0 0)`;document.getElementById('cmpHandle').style.left=`${p}%`;
-const qb=document.getElementById('cmpQuality');
-if(qb)qb.textContent='Q:'+(Math.round(5+(p/100)*90))+'%';
 }
 
 // ===== Sticky / Download =====
