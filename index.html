@@ -106,9 +106,9 @@ select{padding:7px 10px;border:1px solid #e2e8f0;border-radius:8px;background:#f
 .compare-wrap{position:relative;width:100%;overflow:hidden;border-radius:12px;border:1px solid #e2e8f0;cursor:ew-resize;user-select:none;touch-action:none}
 .compare-wrap img{display:block;width:100%;height:auto;pointer-events:none;-webkit-user-drag:none}
 .cmp-overlay{position:absolute;top:0;left:0;width:100%;height:100%;z-index:3;clip-path:inset(0 50% 0 0);pointer-events:none}
-.cmp-handle{position:absolute;top:0;bottom:0;width:3px;left:50%;transform:translateX(-50%);z-index:5;pointer-events:none}
-.cmp-handle::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:38px;height:38px;border-radius:50%;background:#fff;border:2.5px solid #2563eb;box-shadow:0 2px 12px rgba(0,0,0,.25)}
-.cmp-handle::after{content:'⟷';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:15px;color:#2563eb;font-weight:bold}
+.cmp-handle{position:absolute;top:0;bottom:0;width:2px;left:50%;transform:translateX(-50%);z-index:10;pointer-events:none;background:#fff;box-shadow:0 0 6px rgba(0,0,0,.2)}
+.cmp-handle::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:40px;height:40px;border-radius:50%;background:#fff;border:2.5px solid #2563eb;box-shadow:0 2px 8px rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center}
+.cmp-handle::after{content:'❮❯';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:13px;color:#2563eb;font-weight:700;letter-spacing:-2px}
 .cmp-tag{position:absolute;bottom:12px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:5px;z-index:4;pointer-events:none;letter-spacing:.5px}
 .cmp-tag-l{left:12px;background:rgba(37,99,235,.85);color:#fff}
 .cmp-tag-r{right:12px;background:rgba(16,185,129,.85);color:#fff}
@@ -136,6 +136,36 @@ select{padding:7px 10px;border:1px solid #e2e8f0;border-radius:8px;background:#f
 
 /* ===== Footer ===== */
 footer{text-align:center;padding:20px;color:#94a3b8;font-size:13px}
+
+/* ===== Animation Keyframes ===== */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes countUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideIn{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:translateX(0)}}
+
+.page{animation:fadeUp .5s ease-out}
+.dz-icon svg{animation:float 3s ease-in-out infinite}
+.dz-wrap:hover .dz-icon svg{animation:pulse .6s ease-in-out}
+.nav-link.active::after{content:'';display:block;height:2px;background:#2563eb;border-radius:1px;animation:fadeIn .25s ease-out}
+.img-card{animation:fadeUp .35s ease-out both}
+.img-card:nth-child(1){animation-delay:0s}
+.img-card:nth-child(2){animation-delay:.05s}
+.img-card:nth-child(3){animation-delay:.1s}
+.img-card:nth-child(4){animation-delay:.15s}
+.img-card:nth-child(5){animation-delay:.2s}
+.img-card:nth-child(6){animation-delay:.25s}
+.showcase-compare{animation:fadeUp .5s ease-out .15s both}
+.modal-content{animation:fadeUp .3s ease-out}
+.modal-stat .value{animation:countUp .4s ease-out}
+.sh-feat{animation:slideIn .4s ease-out both}
+.sh-feat:nth-child(1){animation-delay:.1s}
+.sh-feat:nth-child(2){animation-delay:.2s}
+.sh-feat:nth-child(3){animation-delay:.3s}
+.btn{transition:all .2s cubic-bezier(.4,0,.2,1)}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(0)}
 
 /* Tab pages */
 .page-compress{display:none}
@@ -169,8 +199,9 @@ body.dark .showcase-compare{border-color:#334155;box-shadow:0 4px 24px rgba(0,0,
 body.dark .sh-feat{border-color:#334155!important}
 body.dark .sh-feat-icon{background:#1e3a5f!important}
 body.dark .sh-sub{color:#94a3b8!important}
-body.dark .cmp-handle::before{border-color:#60a5fa}
+body.dark .cmp-handle::before{border-color:#60a5fa;background:#1e293b}
 body.dark .cmp-handle::after{color:#60a5fa}
+body.dark .cmp-handle{background:#94a3b8}
 body.dark .compare-wrap{border-color:#334155}
 
 @media(max-width:640px){
@@ -531,9 +562,22 @@ lastBlob=blob;lastFile=file;
 mo.classList.add('show');
 co.src=URL.createObjectURL(file);
 cc.src=URL.createObjectURL(blob);
-cos.textContent=fmt(file.size);
-ccs.textContent=fmt(blob.size);
-css.textContent='-'+Math.round((1-blob.size/file.size)*100)+'%';
+// Animate counters
+const origSize=file.size,compSize=blob.size,savePct=Math.round((1-blob.size/file.size)*100);
+cos.textContent='0 B';ccs.textContent='0 B';css.textContent='';
+let start=0;const dur=500,step=16;
+function tick(){
+  const p=Math.min(start/dur,1);
+  cos.textContent=fmt(Math.round(origSize*p));
+  ccs.textContent=fmt(Math.round(compSize*p));
+  start+=step;
+  if(p<1){requestAnimationFrame(tick)}else{
+    cos.textContent=fmt(origSize);
+    ccs.textContent=fmt(compSize);
+    css.textContent='-'+savePct+'%';
+  }
+}
+requestAnimationFrame(tick);
 // Init slider at 50%
 setTimeout(()=>{
 const o=document.getElementById('cmpOverlay');
