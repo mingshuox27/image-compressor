@@ -92,22 +92,20 @@ nav{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-inde
 .modal-close{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;border:none;background:#f1f5f9;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:background .15s}
 .modal-close:hover{background:#e2e8f0}
 .modal-title{font-size:18px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
-.compare-wrap{position:relative;width:100%;overflow:hidden;border-radius:12px;border:1px solid #e2e8f0;cursor:ew-resize;user-select:none;touch-action:none}
-.compare-wrap img{display:block;width:100%;height:auto;pointer-events:none;-webkit-user-drag:none}
-.cmp-overlay{position:absolute;top:0;left:0;width:100%;height:100%;z-index:3;clip-path:inset(0 50% 0 0);pointer-events:none}
-.cmp-handle{position:absolute;top:0;bottom:0;width:2px;left:50%;transform:translateX(-50%);z-index:10;pointer-events:none;background:#fff;box-shadow:0 0 6px rgba(0,0,0,.2)}
-.cmp-handle::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:40px;height:40px;border-radius:50%;background:#fff;border:2.5px solid #2563eb;box-shadow:0 2px 8px rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center}
-.cmp-handle::after{content:'❮❯';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:13px;color:#2563eb;font-weight:700;letter-spacing:-2px}
-.cmp-tag{position:absolute;bottom:12px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:5px;z-index:4;pointer-events:none;letter-spacing:.5px}
-.cmp-tag-l{left:12px;background:rgba(37,99,235,.85);color:#fff}
-.cmp-tag-r{right:12px;background:rgba(16,185,129,.85);color:#fff}
-.modal-stats{display:flex;gap:32px;justify-content:center;margin-top:18px;text-align:center}
-.modal-stat .label{font-size:12px;color:#94a3b8;margin-bottom:2px}
-.modal-stat .value{font-size:20px;font-weight:700}
-.modal-stat .value.orig{color:#475569}
-.modal-stat .value.comp{color:#10b981}
-.modal-stat .save{font-size:16px;font-weight:700;color:#10b981;margin-top:6px}
+.cmp-preview{width:100%;border-radius:12px;overflow:hidden;border:1px solid #e2e8f0;background:#f1f5f9;margin-bottom:12px}
+.cmp-preview img{display:block;width:100%;height:auto}
+.cmp-info{display:flex;gap:8px;justify-content:center;align-items:center;margin-bottom:14px;flex-wrap:wrap}
+.cmp-info-item{text-align:center}
+.ci-label{display:block;font-size:11px;color:#94a3b8;margin-bottom:2px}
+.ci-val{font-size:17px;font-weight:700;color:#475569}
+.ci-val.comp{color:#10b981}
+.ci-save{display:block;font-size:13px;font-weight:700;color:#10b981;margin-top:2px}
+.cmp-info-arrow{display:flex;align-items:center;padding-top:12px}
 .modal-actions{display:flex;gap:12px;justify-content:center;margin-top:20px}
+/* Quality balance point marker */
+.qc-wrap{position:absolute;left:calc(63% - 14px);top:28px;pointer-events:none}
+.qc-line{width:2px;height:10px;background:#f59e0b;border-radius:1px;margin:0 auto}
+.qc-label{display:block;font-size:9px;color:#f59e0b;font-weight:700;text-align:center;margin-top:2px;white-space:nowrap}
 
 /* ===== Showcase comparison slider ===== */
 .demo-wrap{margin-bottom:32px;text-align:center}
@@ -201,9 +199,7 @@ body.dark .showcase-compare{border-color:#334155;box-shadow:0 4px 24px rgba(0,0,
 body.dark .sh-feat{border-color:#334155!important}
 body.dark .sh-feat-icon{background:#1e3a5f!important}
 body.dark .sh-sub{color:#94a3b8!important}
-body.dark .cmp-handle::before{border-color:#60a5fa;background:#1e293b}
-body.dark .cmp-handle::after{color:#60a5fa}
-body.dark .cmp-handle{background:#94a3b8}
+body.dark .cmp-preview{border-color:#334155;background:#1e293b}
 body.dark .compare-wrap{border-color:#334155}
 
 @media(max-width:640px){
@@ -342,22 +338,20 @@ QuickImgCompress
 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
 <span data-i="modalTitle">压缩前后对比</span>
 </div>
-<div class="compare-wrap" id="cmpWrap">
-<img id="cmpOriginal" alt="Original">
-<div class="cmp-overlay" id="cmpOverlay"><img id="cmpCompressed" alt="Compressed"></div>
-<div class="cmp-handle" id="cmpHandle"></div>
-<div class="cmp-tag cmp-tag-l" data-i="cmpOrig">原图</div>
-<div class="cmp-tag cmp-tag-r" data-i="cmpComp">压缩后</div>
+<div class="cmp-preview" id="cmpPreview">
+<img id="cmpCompressed" alt="Compressed">
 </div>
-<div class="modal-stats">
-<div class="modal-stat"><div class="label" data-i="originalSize">原始大小</div><div class="value orig" id="origStat">-</div></div>
-<div class="modal-stat"><div class="label" data-i="compressedSize">压缩后</div><div class="value comp" id="compStat">-</div><div class="save" id="saveStat">-</div></div>
+<div class="cmp-info">
+<div class="cmp-info-item"><span class="ci-label" data-i="originalSize">原始大小</span><span class="ci-val" id="origStat">-</span></div>
+<div class="cmp-info-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
+<div class="cmp-info-item"><span class="ci-label" data-i="compressedSize">压缩后</span><span class="ci-val comp" id="compStat">-</span><span class="ci-save" id="saveStat">-</span></div>
 </div>
 <div class="mc-wrap">
 <div class="mc-row">
 <div class="mc-g" style="flex:2;min-width:160px">
 <label><span data-i="qualityLabel">质量</span>: <span class="val" id="modalQVal">80</span>%</label>
 <input type="range" id="modalQSlider" min="5" max="95" value="80">
+<div class="qc-wrap"><div class="qc-line"></div><span class="qc-label" data-i="qcLabel">平衡点</span></div>
 </div>
 <div class="mc-g">
 <label data-i="formatLabel">格式</label>
@@ -378,7 +372,7 @@ QuickImgCompress
 
 <!-- ===== Footer ===== -->
 <footer data-i="footer">© 2026 QuickImgCompress.com · 在线图片压缩工具</footer>
-<div style="text-align:center;font-size:11px;color:#94a3b8;padding:0 20px 12px">v20260517.1</div>
+<div style="text-align:center;font-size:11px;color:#94a3b8;padding:0 20px 12px">v20260518.1</div>
 
 <div class="toast" id="toast"></div>
 
@@ -390,7 +384,7 @@ filesLabel:'个文件',compressAll:'全部压缩',clearAll:'清空',
 qualityLabel:'质量',formatLabel:'输出格式',widthLabel:'最大宽度',origWidth:'原始',
 processing:'处理中...',readyLabel:'已压缩',filesReady:'张',startOver:'重新开始',downloadAll:'下载全部',
 modalTitle:'压缩前后对比',originalSize:'原始大小',compressedSize:'压缩后',modalClose:'关闭',modalDownload:'下载压缩后图片',
-cmpOrig:'原图',cmpComp:'压缩后',
+cmpOrig:'原图',cmpComp:'压缩后',qcLabel:'平衡点',
 shTitle:'选择压缩模式',shSub:'在 Lossless（无损）和 High Quality（高质量）之间切换，在画质和文件大小之间找到最佳平衡。<strong>看出区别了吗？</strong>',
 shLossless:'无损',shHigh:'高质量',shBefore:'压缩前',shAfter:'压缩后',
 shF1:'更小的图片，更快的网站',shF1d:'网站图片通常过大且未针对网页优化。通过压缩图片，你可以节省数兆字节的空间，而几乎察觉不到画质损失。',
@@ -409,7 +403,7 @@ filesLabel:'files selected',compressAll:'Compress All',clearAll:'Clear',
 qualityLabel:'Quality',formatLabel:'Format',widthLabel:'Max Width',origWidth:'Original',
 processing:'Processing...',readyLabel:'Compressed',filesReady:'files',startOver:'Start Over',downloadAll:'Download All',
 modalTitle:'Before & After',originalSize:'Original Size',compressedSize:'Compressed Size',modalClose:'Close',modalDownload:'Download Compressed',
-cmpOrig:'Original',cmpComp:'Compressed',
+cmpOrig:'Original',cmpComp:'Compressed',qcLabel:'Sweet spot',
 shTitle:'Choose between compression modes',shSub:'Choose between <strong>Lossless</strong> or <strong>High Quality</strong> compression to get the best balance between image quality and file size. <strong>See any difference?</strong>',
 shLossless:'Lossless',shHigh:'High Quality',shBefore:'Size before',shAfter:'After',
 shF1:'Smaller images, Faster websites',shF1d:'Websites images are usually too big and unoptimized for web purposes. It is easy to save a few megabytes by compressing your assets without noticing any loss in quality.',
@@ -550,7 +544,6 @@ const mo=document.getElementById('modalOverlay');
 const mc=document.getElementById('modalClose');
 const mcb=document.getElementById('modalCloseBtn');
 const mdb=document.getElementById('modalDownloadBtn');
-const co=document.getElementById('cmpOriginal');
 const cc=document.getElementById('cmpCompressed');
 const cos=document.getElementById('origStat');
 const ccs=document.getElementById('compStat');
@@ -587,7 +580,6 @@ lastBlob=blob;lastFile=file;modalCanvas=null;
 // Reset modal controls
 mQS.value=80;mQV.textContent='80';mQF.value='jpeg';mQW.value='0';
 mo.classList.add('show');
-co.src=URL.createObjectURL(file);
 cc.src=URL.createObjectURL(blob);
 // Load original image onto hidden canvas for re-compression
 const mImg=new Image();
@@ -614,12 +606,6 @@ function tick(){
   }
 }
 requestAnimationFrame(tick);
-// Init slider at 50%
-setTimeout(()=>{
-const o=document.getElementById('cmpOverlay');
-const h=document.getElementById('cmpHandle');
-if(o&&h){o.style.clipPath='inset(0 50% 0 0)';h.style.left='50%'}
-},50);
 }
 [mc,mcb].forEach(b=>b.addEventListener('click',()=>mo.classList.remove('show')));
 mo.addEventListener('click',e=>{if(e.target===mo)mo.classList.remove('show')});
@@ -629,20 +615,6 @@ mdb.addEventListener('click',()=>{if(!lastBlob||!lastFile)return;const ext=mQF.v
 mQS.addEventListener('input',()=>{mQV.textContent=mQS.value;recompress()});
 mQF.addEventListener('change',recompress);
 mQW.addEventListener('change',recompress);
-
-// Comparison slider (visual only — no compression change)
-const cw=document.getElementById('cmpWrap');
-let dragging=false;
-cw.addEventListener('mousedown',e=>{dragging=true;mS(e)});
-document.addEventListener('mousemove',e=>{if(dragging)mS(e)});
-document.addEventListener('mouseup',()=>{dragging=false});
-cw.addEventListener('touchstart',e=>{dragging=true;mS(e.touches[0])});
-document.addEventListener('touchmove',e=>{if(dragging)mS(e.touches[0])});
-document.addEventListener('touchend',()=>{dragging=false});
-function mS(e){
-const r=cw.getBoundingClientRect();let x=(e.clientX||0)-r.left;x=Math.max(0,Math.min(x,r.width));const p=(x/r.width)*100;
-document.getElementById('cmpOverlay').style.clipPath=`inset(0 ${100-p}% 0 0)`;document.getElementById('cmpHandle').style.left=`${p}%`;
-}
 
 // ===== Sticky / Download =====
 function updateSticky(){const r=compressed.size;sb.classList.toggle('show',r>0);rc.textContent=r}
